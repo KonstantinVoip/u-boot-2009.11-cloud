@@ -1,0 +1,232 @@
+Overview of P1/P2 RDB platforms
+---------------------------------
+
+1. P2020 is a Low End Dual core processor of QorIQ series.It is e500 based.
+2. P2010 is single core version of P2020. All same as P2020 minus one e500 core.
+3. P1020 is another processor of QorIQ series with e500 core. It is targeted for
+ Ultra Low End  product base. A scaled down version of P2020 with respect to
+ frequencies, caches sizes, etc. eTSEC controller in P1020 is new one 2.0 also
+ called VeTSEC.
+4. P1011 is single core version of P1020. All same as P1020 minus one e500 core.
+
+The above Processors are supported on RDB with the following devices:
+.  DDR2 SDRAM discrete devices (32-bit bus in P1020 and 64bit in P2020)
+.  16 Mbyte NOR flash
+.  32 Mbyte NAND flash
+.  256 Kbit M24256 I2C EEPROM
+.  16 Mbyte SPI flash memory
+.  SD connector to interface with the SD memory card.
+.  PCIe
+	- x1 PCIe slot
+	- x1 mini-PCI slot
+.  10/100/1000 BaseT Ethernet ports
+	- eTSEC1 RGMII: four 10/100/1000 ports using Vitesse(VSC7385 L2 switch).
+	- eTSEC2, SGMII: one 10/100/1000 port using Vitesse VSC8221.
+	- eTSEC3, RGMII: one 10/100/1000 port Vitesse VSC8641
+. USB 2.0 port: high-speed host/device
+	- two external ULPI PHY interface; SMSC USB3300 USB PHY, mini-AB
+. Dual UART ports
+	- DUART interface: supports two UARTs up to 115200 bps
+. TDM  (only in P1020/P1011)
+	- 4 FXS ports
+	- 1 FXO port via relay
+. Real-time clock and thermal sensor on I2C bus
+
+Building U-boot
+----------------
+P2020RDB Make Targets
+---------------------
+1. P2020RDB_config
+2. P2020RDB_NAND_config
+3. P2020RDB_SDCARD_config
+4. P2020RDB_SPIFLASH_config
+5. P2020RDB_RAMBOOT_config
+6. P2020RDB_36BIT_config
+7. P2020RDB_NAND_36BIT_config
+8. P2020RDB_SDCARD_36BIT_config
+9. P2020RDB_SPIFLASH_36BIT_config
+10. P2020RDB_RAMBOOT_36BIT_config
+11. P2020RDB_I2C_config
+
+P1020RDB Make Targets
+---------------------
+1. P1020RDB_config
+2. P1020RDB_NAND_config
+3. P1020RDB_SDCARD_config
+4. P1020RDB_SPIFLASH_config
+5. P1020RDB_RAMBOOT_config
+6. P1020RDB_36BIT_config
+7. P1020RDB_NAND_36BIT_config
+8. P1020RDB_SDCARD_36BIT_config
+9. P1020RDB_SPIFLASH_36BIT_config
+10. P1020RDB_RAMBOOT_36BIT_config
+11. P1020RDB_I2C_config
+
+P2010RDB Make Targets
+---------------------
+1. P2010RDB_config
+2. P2010RDB_NAND_config
+3. P2010RDB_SDCARD_config
+4. P2010RDB_SPIFLASH_config
+5. P2010RDB_RAMBOOT_config
+6. P2010RDB_36BIT_config
+7. P2010RDB_NAND_36BIT_config
+8. P2010RDB_SDCARD_36BIT_config
+9. P2010RDB_SPIFLASH_36BIT_config
+10. P2010RDB_RAMBOOT_36BIT_config
+11. P2010RDB_I2C_config
+
+P1011RDB Make Targets
+---------------------
+1. P1011RDB_config
+2. P1011RDB_NAND_config
+3. P1011RDB_SDCARD_config
+4. P1011RDB_SPIFLASH_config
+5. P1011RDB_RAMBOOT_config
+6. P1011RDB_36BIT_config
+7. P1011RDB_NAND_36BIT_config
+8. P1011RDB_SDCARD_36BIT_config
+9. P1011RDB_SPIFLASH_36BIT_config
+10. P1011RDB_RAMBOOT_36BIT_config
+11. P1011RDB_I2C_config
+
+How to make u-boot
+-------------------
+	make  <make_target>  (please select 1 out of the above list)
+	make
+
+NOR Flash Banks
+-----------
+RDB board for P2020 has two flash banks. They are both present on boot.
+
+Booting by default is always from the boot bank at 0xef00_0000.
+
+Memory Map
+----------
+0xef00_0000 - 0xef7f_ffff	Alernate bank		8MB
+0xe800_0000 - 0xefff_ffff	Boot bank		8MB
+
+0xef78_0000 - 0xef7f_ffff	Alternate u-boot address	512KB
+0xeff8_0000 - 0xefff_ffff	Boot u-boot address		512KB
+
+Switch settings to boot from the NOR flash banks
+------------------------------------------------
+SW4[8]=0 default NOR Flash bank
+SW4[8]=1 Alternate NOR Flash bank
+
+Flashing u-boot image on NOR Flash ALternate Bank.
+--------------------------------------------
+To place a new u-boot image in the alternate flash bank and then boot
+with that new image temporarily, use this:
+	tftp 1000000 u-boot.bin
+	erase ef780000 ef7fffff
+	cp.b 1000000 ef780000 80000
+
+Now to boot from the alternate bank change the SW4[8] from 0 to 1.
+
+Flashing u-boot image on NOR Flash Primary Bank.
+------------------------------------------------
+	tftp 1000000 u-boot.bin
+	protect off all
+	erase eff80000 ffffffff
+	cp.b 1000000 eff80000 80000
+
+Using the Device Tree Source File (p2020rdb as an example)
+-----------------------------------------------------------
+To create the DTB (Device Tree Binary) image file,
+use a command similar to this:
+
+	dtc -b 0 -f -I dts -O dtb p2020rdb.dts > p2020rdb.dtb
+
+Likely, that .dts file will come from here;
+
+	linux-2.6/arch/powerpc/boot/dts/p2020rdb.dts
+
+Booting Linux
+-------------
+Place a linux uImage in the TFTP disk area.
+
+	tftp 1000000 uImage.p2020rdb
+	tftp 2000000 rootfs.ext2.gz.uboot
+	tftp c00000 p2020rdb.dtb
+	bootm 1000000 2000000 c00000
+
+Implementing AMP(Asymmetric MultiProcessing)
+---------------------------------------------
+1. Build kernel image for core0:
+
+	a. $ make 85xx/p1_p2_rdb_defconfig
+
+	b. $ make menuconfig
+	   - un-select "Processor support"->
+		"Symetric multi-processing support"
+
+	c. $ make uImage
+
+	d. $ cp arch/powerpc/boot/uImage /tftpboot/uImage.core0
+
+2. Build kernel image for core1:
+
+	a. $ make 85xx/p1_p2_rdb_defconfig
+
+	b. $ make menuconfig
+	   - Un-select "Processor support"->
+		"Symetric multi-processing support"
+	   - Select "Advanced setup" ->
+		"Prompt for advanced kernel configuration options"
+		- Select
+			"Set physical address where the kernel is loaded"
+			and set it to 0x20000000, asssuming core1 will
+			start from 512MB.
+		- Select "Set custom page offset address"
+		- Select "Set custom kernel base address"
+		- Select "Set maximum low memory"
+	   - "Exit" and save the selection.
+
+	c. $ make uImage
+
+	d. $ cp arch/powerpc/boot/uImage /tftpboot/uImage.core1
+
+3. Create dtb for core0:
+
+	$ dtc -I dts -O dtb -f -b 0
+		 arch/powerpc/boot/dts/p2020rdb_camp_core0.dts >
+		 /tftpboot/p2020rdb_camp_core0.dtb
+
+4. Create dtb for core1:
+
+	$ dtc -I dts -O dtb -f -b 1
+		 arch/powerpc/boot/dts/p2020rdb_camp_core1.dts >
+		 /tftpboot/p2020rdb_camp_core1.dtb
+
+5. Bring up two cores separately:
+
+	a. Power on the board, under u-boot prompt:
+		=> setenv <serverip>
+		=> setenv <ipaddr>
+		=> setenv bootargs root=/dev/ram rw console=ttyS0,115200
+	b. Bring up core1's kernel first:
+		=> setenv bootm_low 0x20000000
+		=> setenv bootm_size 0x10000000
+		=> tftp 21000000 uImage.core1
+		=> tftp 22000000 ramdiskfile
+		=> tftp 20c00000 p2020rdb_camp_core1.dtb
+		=> interrupts off
+		=> bootm start 21000000 22000000 20c00000
+		=> bootm loados
+		=> bootm ramdisk
+		=> bootm fdt
+		=> fdt boardsetup
+		=> fdt chosen $initrd_start $initrd_end
+		=> bootm prep
+		=> cpu 1 release $bootm_low - $fdtaddr -
+	c. Bring up core0's kernel(on the same u-boot console):
+		=> setenv bootm_low 0
+		=> setenv bootm_size 0x20000000
+		=> tftp 1000000 uImage.core0
+		=> tftp 2000000 ramdiskfile
+		=> tftp c00000 p2020rdb_camp_core0.dtb
+		=> bootm 1000000 2000000 c00000
+
+Please note only core0 will run u-boot, core1 starts kernel directly
+after "cpu release" command is issued.
