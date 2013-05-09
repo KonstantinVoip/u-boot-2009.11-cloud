@@ -1,0 +1,565 @@
+env_embedded.o:  \
+ /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/common/env_embedded.c \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/config.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/configs/P1_P2_RDB.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/config_cmd_default.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/asm/config.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/environment.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/compiler.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stddef.h \
+  /usr/include/stdint.h /usr/include/features.h /usr/include/sys/cdefs.h \
+  /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+  /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+  /usr/include/errno.h /usr/include/bits/errno.h \
+  /usr/include/linux/errno.h /usr/include/asm/errno.h \
+  /usr/include/asm-i386/errno.h /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/errno-base.h /usr/include/stdlib.h \
+  /usr/include/sys/types.h /usr/include/bits/types.h \
+  /usr/include/bits/typesizes.h /usr/include/time.h /usr/include/endian.h \
+  /usr/include/bits/endian.h /usr/include/sys/select.h \
+  /usr/include/bits/select.h /usr/include/bits/sigset.h \
+  /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
+  /usr/include/bits/pthreadtypes.h /usr/include/alloca.h \
+  /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+  /usr/include/wchar.h /usr/include/gconv.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stdarg.h \
+  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+  /usr/include/bits/stdio.h /usr/include/string.h \
+  /usr/include/bits/string.h /usr/include/bits/string2.h \
+  /usr/include/sys/mman.h /usr/include/bits/mman.h /usr/include/fcntl.h \
+  /usr/include/bits/fcntl.h /usr/include/byteswap.h \
+  /usr/include/bits/byteswap.h
+image.o:  \
+ /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/common/image.c \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/mkimage.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/os_support.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/compiler.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stddef.h \
+  /usr/include/stdint.h /usr/include/features.h /usr/include/sys/cdefs.h \
+  /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+  /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+  /usr/include/errno.h /usr/include/bits/errno.h \
+  /usr/include/linux/errno.h /usr/include/asm/errno.h \
+  /usr/include/asm-i386/errno.h /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/errno-base.h /usr/include/stdlib.h \
+  /usr/include/sys/types.h /usr/include/bits/types.h \
+  /usr/include/bits/typesizes.h /usr/include/time.h /usr/include/endian.h \
+  /usr/include/bits/endian.h /usr/include/sys/select.h \
+  /usr/include/bits/select.h /usr/include/bits/sigset.h \
+  /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
+  /usr/include/bits/pthreadtypes.h /usr/include/alloca.h \
+  /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+  /usr/include/wchar.h /usr/include/gconv.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stdarg.h \
+  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+  /usr/include/bits/stdio.h /usr/include/string.h \
+  /usr/include/bits/string.h /usr/include/bits/string2.h \
+  /usr/include/sys/mman.h /usr/include/bits/mman.h /usr/include/fcntl.h \
+  /usr/include/bits/fcntl.h /usr/include/byteswap.h \
+  /usr/include/bits/byteswap.h /usr/include/sys/stat.h \
+  /usr/include/bits/stat.h /usr/include/unistd.h \
+  /usr/include/bits/posix_opt.h /usr/include/bits/confname.h \
+  /usr/include/getopt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/sha1.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/fdt_host.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/fdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/libfdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/libfdt_env.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/compiler.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/fdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/fdt_support.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/u-boot/md5.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/compiler.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/image.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/command.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/config.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/configs/P1_P2_RDB.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/config_cmd_default.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/asm/config.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/libfdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/fdt_support.h
+crc32.o:  \
+ /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/lib_generic/crc32.c \
+  /usr/include/stdint.h /usr/include/features.h /usr/include/sys/cdefs.h \
+  /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+  /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/u-boot/zlib.h
+md5.o:  \
+ /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/lib_generic/md5.c \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/compiler.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stddef.h \
+  /usr/include/stdint.h /usr/include/features.h /usr/include/sys/cdefs.h \
+  /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+  /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+  /usr/include/errno.h /usr/include/bits/errno.h \
+  /usr/include/linux/errno.h /usr/include/asm/errno.h \
+  /usr/include/asm-i386/errno.h /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/errno-base.h /usr/include/stdlib.h \
+  /usr/include/sys/types.h /usr/include/bits/types.h \
+  /usr/include/bits/typesizes.h /usr/include/time.h /usr/include/endian.h \
+  /usr/include/bits/endian.h /usr/include/sys/select.h \
+  /usr/include/bits/select.h /usr/include/bits/sigset.h \
+  /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
+  /usr/include/bits/pthreadtypes.h /usr/include/alloca.h \
+  /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+  /usr/include/wchar.h /usr/include/gconv.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stdarg.h \
+  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+  /usr/include/bits/stdio.h /usr/include/string.h \
+  /usr/include/bits/string.h /usr/include/bits/string2.h \
+  /usr/include/sys/mman.h /usr/include/bits/mman.h /usr/include/fcntl.h \
+  /usr/include/bits/fcntl.h /usr/include/byteswap.h \
+  /usr/include/bits/byteswap.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/u-boot/md5.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/compiler.h
+sha1.o:  \
+ /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/lib_generic/sha1.c \
+  /usr/include/string.h /usr/include/features.h /usr/include/sys/cdefs.h \
+  /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+  /usr/include/gnu/stubs-32.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stddef.h \
+  /usr/include/bits/string.h /usr/include/bits/string2.h \
+  /usr/include/endian.h /usr/include/bits/endian.h \
+  /usr/include/bits/types.h /usr/include/bits/typesizes.h \
+  /usr/include/stdlib.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/watchdog.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/sha1.h
+default_image.o:  \
+ /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/default_image.c \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/mkimage.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/os_support.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/compiler.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stddef.h \
+  /usr/include/stdint.h /usr/include/features.h /usr/include/sys/cdefs.h \
+  /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+  /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+  /usr/include/errno.h /usr/include/bits/errno.h \
+  /usr/include/linux/errno.h /usr/include/asm/errno.h \
+  /usr/include/asm-i386/errno.h /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/errno-base.h /usr/include/stdlib.h \
+  /usr/include/sys/types.h /usr/include/bits/types.h \
+  /usr/include/bits/typesizes.h /usr/include/time.h /usr/include/endian.h \
+  /usr/include/bits/endian.h /usr/include/sys/select.h \
+  /usr/include/bits/select.h /usr/include/bits/sigset.h \
+  /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
+  /usr/include/bits/pthreadtypes.h /usr/include/alloca.h \
+  /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+  /usr/include/wchar.h /usr/include/gconv.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stdarg.h \
+  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+  /usr/include/bits/stdio.h /usr/include/string.h \
+  /usr/include/bits/string.h /usr/include/bits/string2.h \
+  /usr/include/sys/mman.h /usr/include/bits/mman.h /usr/include/fcntl.h \
+  /usr/include/bits/fcntl.h /usr/include/byteswap.h \
+  /usr/include/bits/byteswap.h /usr/include/sys/stat.h \
+  /usr/include/bits/stat.h /usr/include/unistd.h \
+  /usr/include/bits/posix_opt.h /usr/include/bits/confname.h \
+  /usr/include/getopt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/sha1.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/fdt_host.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/fdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/libfdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/libfdt_env.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/compiler.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/fdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/fdt_support.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/image.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/command.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/config.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/configs/P1_P2_RDB.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/config_cmd_default.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/asm/config.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/libfdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/fdt_support.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/u-boot/crc.h
+fit_image.o:  \
+ /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/fit_image.c \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/mkimage.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/os_support.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/compiler.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stddef.h \
+  /usr/include/stdint.h /usr/include/features.h /usr/include/sys/cdefs.h \
+  /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+  /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+  /usr/include/errno.h /usr/include/bits/errno.h \
+  /usr/include/linux/errno.h /usr/include/asm/errno.h \
+  /usr/include/asm-i386/errno.h /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/errno-base.h /usr/include/stdlib.h \
+  /usr/include/sys/types.h /usr/include/bits/types.h \
+  /usr/include/bits/typesizes.h /usr/include/time.h /usr/include/endian.h \
+  /usr/include/bits/endian.h /usr/include/sys/select.h \
+  /usr/include/bits/select.h /usr/include/bits/sigset.h \
+  /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
+  /usr/include/bits/pthreadtypes.h /usr/include/alloca.h \
+  /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+  /usr/include/wchar.h /usr/include/gconv.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stdarg.h \
+  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+  /usr/include/bits/stdio.h /usr/include/string.h \
+  /usr/include/bits/string.h /usr/include/bits/string2.h \
+  /usr/include/sys/mman.h /usr/include/bits/mman.h /usr/include/fcntl.h \
+  /usr/include/bits/fcntl.h /usr/include/byteswap.h \
+  /usr/include/bits/byteswap.h /usr/include/sys/stat.h \
+  /usr/include/bits/stat.h /usr/include/unistd.h \
+  /usr/include/bits/posix_opt.h /usr/include/bits/confname.h \
+  /usr/include/getopt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/sha1.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/fdt_host.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/fdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/libfdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/libfdt_env.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/compiler.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/fdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/fdt_support.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/image.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/command.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/config.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/configs/P1_P2_RDB.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/config_cmd_default.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/asm/config.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/libfdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/fdt_support.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/u-boot/crc.h
+gen_eth_addr.o:  \
+ /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/gen_eth_addr.c \
+  /usr/include/stdio.h /usr/include/features.h /usr/include/sys/cdefs.h \
+  /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+  /usr/include/gnu/stubs-32.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stddef.h \
+  /usr/include/bits/types.h /usr/include/bits/typesizes.h \
+  /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
+  /usr/include/bits/wchar.h /usr/include/gconv.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stdarg.h \
+  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+  /usr/include/bits/stdio.h /usr/include/stdlib.h \
+  /usr/include/sys/types.h /usr/include/time.h /usr/include/endian.h \
+  /usr/include/bits/endian.h /usr/include/sys/select.h \
+  /usr/include/bits/select.h /usr/include/bits/sigset.h \
+  /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
+  /usr/include/bits/pthreadtypes.h /usr/include/alloca.h \
+  /usr/include/unistd.h /usr/include/bits/posix_opt.h \
+  /usr/include/bits/confname.h /usr/include/getopt.h
+img2srec.o:  \
+ /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/img2srec.c \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/os_support.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/compiler.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stddef.h \
+  /usr/include/stdint.h /usr/include/features.h /usr/include/sys/cdefs.h \
+  /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+  /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+  /usr/include/errno.h /usr/include/bits/errno.h \
+  /usr/include/linux/errno.h /usr/include/asm/errno.h \
+  /usr/include/asm-i386/errno.h /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/errno-base.h /usr/include/stdlib.h \
+  /usr/include/sys/types.h /usr/include/bits/types.h \
+  /usr/include/bits/typesizes.h /usr/include/time.h /usr/include/endian.h \
+  /usr/include/bits/endian.h /usr/include/sys/select.h \
+  /usr/include/bits/select.h /usr/include/bits/sigset.h \
+  /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
+  /usr/include/bits/pthreadtypes.h /usr/include/alloca.h \
+  /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+  /usr/include/wchar.h /usr/include/gconv.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stdarg.h \
+  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+  /usr/include/bits/stdio.h /usr/include/string.h \
+  /usr/include/bits/string.h /usr/include/bits/string2.h \
+  /usr/include/sys/mman.h /usr/include/bits/mman.h /usr/include/fcntl.h \
+  /usr/include/bits/fcntl.h /usr/include/byteswap.h \
+  /usr/include/bits/byteswap.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stdbool.h \
+  /usr/include/ctype.h /usr/include/elf.h /usr/include/unistd.h \
+  /usr/include/bits/posix_opt.h /usr/include/bits/confname.h \
+  /usr/include/getopt.h
+kwbimage.o:  \
+ /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/kwbimage.c \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/mkimage.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/os_support.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/compiler.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stddef.h \
+  /usr/include/stdint.h /usr/include/features.h /usr/include/sys/cdefs.h \
+  /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+  /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+  /usr/include/errno.h /usr/include/bits/errno.h \
+  /usr/include/linux/errno.h /usr/include/asm/errno.h \
+  /usr/include/asm-i386/errno.h /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/errno-base.h /usr/include/stdlib.h \
+  /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
+  /usr/include/endian.h /usr/include/bits/endian.h /usr/include/xlocale.h \
+  /usr/include/sys/types.h /usr/include/bits/types.h \
+  /usr/include/bits/typesizes.h /usr/include/time.h \
+  /usr/include/sys/select.h /usr/include/bits/select.h \
+  /usr/include/bits/sigset.h /usr/include/bits/time.h \
+  /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
+  /usr/include/alloca.h /usr/include/stdio.h /usr/include/libio.h \
+  /usr/include/_G_config.h /usr/include/wchar.h /usr/include/gconv.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stdarg.h \
+  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+  /usr/include/bits/stdio.h /usr/include/string.h \
+  /usr/include/bits/string.h /usr/include/bits/string2.h \
+  /usr/include/sys/mman.h /usr/include/bits/mman.h /usr/include/fcntl.h \
+  /usr/include/bits/fcntl.h /usr/include/bits/uio.h \
+  /usr/include/sys/stat.h /usr/include/bits/stat.h \
+  /usr/include/byteswap.h /usr/include/bits/byteswap.h \
+  /usr/include/unistd.h /usr/include/bits/posix_opt.h \
+  /usr/include/bits/environments.h /usr/include/bits/confname.h \
+  /usr/include/getopt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/sha1.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/fdt_host.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/fdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/libfdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/libfdt_env.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/compiler.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/fdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/fdt_support.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/image.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/command.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/config.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/configs/P1_P2_RDB.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/config_cmd_default.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/asm/config.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/libfdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/fdt_support.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/kwbimage.h
+mkimage.o:  \
+ /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/mkimage.c \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/mkimage.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/os_support.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/compiler.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stddef.h \
+  /usr/include/stdint.h /usr/include/features.h /usr/include/sys/cdefs.h \
+  /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+  /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+  /usr/include/errno.h /usr/include/bits/errno.h \
+  /usr/include/linux/errno.h /usr/include/asm/errno.h \
+  /usr/include/asm-i386/errno.h /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/errno-base.h /usr/include/stdlib.h \
+  /usr/include/sys/types.h /usr/include/bits/types.h \
+  /usr/include/bits/typesizes.h /usr/include/time.h /usr/include/endian.h \
+  /usr/include/bits/endian.h /usr/include/sys/select.h \
+  /usr/include/bits/select.h /usr/include/bits/sigset.h \
+  /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
+  /usr/include/bits/pthreadtypes.h /usr/include/alloca.h \
+  /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+  /usr/include/wchar.h /usr/include/gconv.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stdarg.h \
+  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+  /usr/include/bits/stdio.h /usr/include/string.h \
+  /usr/include/bits/string.h /usr/include/bits/string2.h \
+  /usr/include/sys/mman.h /usr/include/bits/mman.h /usr/include/fcntl.h \
+  /usr/include/bits/fcntl.h /usr/include/byteswap.h \
+  /usr/include/bits/byteswap.h /usr/include/sys/stat.h \
+  /usr/include/bits/stat.h /usr/include/unistd.h \
+  /usr/include/bits/posix_opt.h /usr/include/bits/confname.h \
+  /usr/include/getopt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/sha1.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/fdt_host.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/fdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/libfdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/libfdt_env.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/compiler.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/fdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/fdt_support.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/image.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/command.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/config.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/configs/P1_P2_RDB.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/config_cmd_default.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/asm/config.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/libfdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/fdt_support.h
+os_support.o:  \
+ /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/os_support.c \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/compiler.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stddef.h \
+  /usr/include/stdint.h /usr/include/features.h /usr/include/sys/cdefs.h \
+  /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+  /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+  /usr/include/errno.h /usr/include/bits/errno.h \
+  /usr/include/linux/errno.h /usr/include/asm/errno.h \
+  /usr/include/asm-i386/errno.h /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/errno-base.h /usr/include/stdlib.h \
+  /usr/include/sys/types.h /usr/include/bits/types.h \
+  /usr/include/bits/typesizes.h /usr/include/time.h /usr/include/endian.h \
+  /usr/include/bits/endian.h /usr/include/sys/select.h \
+  /usr/include/bits/select.h /usr/include/bits/sigset.h \
+  /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
+  /usr/include/bits/pthreadtypes.h /usr/include/alloca.h \
+  /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+  /usr/include/wchar.h /usr/include/gconv.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stdarg.h \
+  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+  /usr/include/bits/stdio.h /usr/include/string.h \
+  /usr/include/bits/string.h /usr/include/bits/string2.h \
+  /usr/include/sys/mman.h /usr/include/bits/mman.h /usr/include/fcntl.h \
+  /usr/include/bits/fcntl.h /usr/include/byteswap.h \
+  /usr/include/bits/byteswap.h
+fdt.o:  \
+ /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/libfdt/fdt.c \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/libfdt_env.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/compiler.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stddef.h \
+  /usr/include/stdint.h /usr/include/features.h /usr/include/sys/cdefs.h \
+  /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+  /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+  /usr/include/errno.h /usr/include/bits/errno.h \
+  /usr/include/linux/errno.h /usr/include/asm/errno.h \
+  /usr/include/asm-i386/errno.h /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/errno-base.h /usr/include/stdlib.h \
+  /usr/include/sys/types.h /usr/include/bits/types.h \
+  /usr/include/bits/typesizes.h /usr/include/time.h /usr/include/endian.h \
+  /usr/include/bits/endian.h /usr/include/sys/select.h \
+  /usr/include/bits/select.h /usr/include/bits/sigset.h \
+  /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
+  /usr/include/bits/pthreadtypes.h /usr/include/alloca.h \
+  /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+  /usr/include/wchar.h /usr/include/gconv.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stdarg.h \
+  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+  /usr/include/bits/stdio.h /usr/include/string.h \
+  /usr/include/bits/string.h /usr/include/bits/string2.h \
+  /usr/include/sys/mman.h /usr/include/bits/mman.h /usr/include/fcntl.h \
+  /usr/include/bits/fcntl.h /usr/include/byteswap.h \
+  /usr/include/bits/byteswap.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/fdt_host.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/fdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/libfdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/libfdt_env.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/fdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/fdt_support.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/libfdt/libfdt_internal.h
+fdt_ro.o:  \
+ /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/libfdt/fdt_ro.c \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/libfdt_env.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/compiler.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stddef.h \
+  /usr/include/stdint.h /usr/include/features.h /usr/include/sys/cdefs.h \
+  /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+  /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+  /usr/include/errno.h /usr/include/bits/errno.h \
+  /usr/include/linux/errno.h /usr/include/asm/errno.h \
+  /usr/include/asm-i386/errno.h /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/errno-base.h /usr/include/stdlib.h \
+  /usr/include/sys/types.h /usr/include/bits/types.h \
+  /usr/include/bits/typesizes.h /usr/include/time.h /usr/include/endian.h \
+  /usr/include/bits/endian.h /usr/include/sys/select.h \
+  /usr/include/bits/select.h /usr/include/bits/sigset.h \
+  /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
+  /usr/include/bits/pthreadtypes.h /usr/include/alloca.h \
+  /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+  /usr/include/wchar.h /usr/include/gconv.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stdarg.h \
+  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+  /usr/include/bits/stdio.h /usr/include/string.h \
+  /usr/include/bits/string.h /usr/include/bits/string2.h \
+  /usr/include/sys/mman.h /usr/include/bits/mman.h /usr/include/fcntl.h \
+  /usr/include/bits/fcntl.h /usr/include/byteswap.h \
+  /usr/include/bits/byteswap.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/fdt_host.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/fdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/libfdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/libfdt_env.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/fdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/fdt_support.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/libfdt/libfdt_internal.h
+fdt_rw.o:  \
+ /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/libfdt/fdt_rw.c \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/libfdt_env.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/compiler.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stddef.h \
+  /usr/include/stdint.h /usr/include/features.h /usr/include/sys/cdefs.h \
+  /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+  /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+  /usr/include/errno.h /usr/include/bits/errno.h \
+  /usr/include/linux/errno.h /usr/include/asm/errno.h \
+  /usr/include/asm-i386/errno.h /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/errno-base.h /usr/include/stdlib.h \
+  /usr/include/sys/types.h /usr/include/bits/types.h \
+  /usr/include/bits/typesizes.h /usr/include/time.h /usr/include/endian.h \
+  /usr/include/bits/endian.h /usr/include/sys/select.h \
+  /usr/include/bits/select.h /usr/include/bits/sigset.h \
+  /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
+  /usr/include/bits/pthreadtypes.h /usr/include/alloca.h \
+  /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+  /usr/include/wchar.h /usr/include/gconv.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stdarg.h \
+  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+  /usr/include/bits/stdio.h /usr/include/string.h \
+  /usr/include/bits/string.h /usr/include/bits/string2.h \
+  /usr/include/sys/mman.h /usr/include/bits/mman.h /usr/include/fcntl.h \
+  /usr/include/bits/fcntl.h /usr/include/byteswap.h \
+  /usr/include/bits/byteswap.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/fdt_host.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/fdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/libfdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/libfdt_env.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/fdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/fdt_support.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/libfdt/libfdt_internal.h
+fdt_strerror.o:  \
+ /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/libfdt/fdt_strerror.c \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/libfdt_env.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/compiler.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stddef.h \
+  /usr/include/stdint.h /usr/include/features.h /usr/include/sys/cdefs.h \
+  /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+  /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+  /usr/include/errno.h /usr/include/bits/errno.h \
+  /usr/include/linux/errno.h /usr/include/asm/errno.h \
+  /usr/include/asm-i386/errno.h /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/errno-base.h /usr/include/stdlib.h \
+  /usr/include/sys/types.h /usr/include/bits/types.h \
+  /usr/include/bits/typesizes.h /usr/include/time.h /usr/include/endian.h \
+  /usr/include/bits/endian.h /usr/include/sys/select.h \
+  /usr/include/bits/select.h /usr/include/bits/sigset.h \
+  /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
+  /usr/include/bits/pthreadtypes.h /usr/include/alloca.h \
+  /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+  /usr/include/wchar.h /usr/include/gconv.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stdarg.h \
+  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+  /usr/include/bits/stdio.h /usr/include/string.h \
+  /usr/include/bits/string.h /usr/include/bits/string2.h \
+  /usr/include/sys/mman.h /usr/include/bits/mman.h /usr/include/fcntl.h \
+  /usr/include/bits/fcntl.h /usr/include/byteswap.h \
+  /usr/include/bits/byteswap.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/fdt_host.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/fdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/libfdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/libfdt_env.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/fdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/fdt_support.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/libfdt/libfdt_internal.h
+fdt_wip.o:  \
+ /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/libfdt/fdt_wip.c \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/libfdt_env.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/compiler.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stddef.h \
+  /usr/include/stdint.h /usr/include/features.h /usr/include/sys/cdefs.h \
+  /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+  /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+  /usr/include/errno.h /usr/include/bits/errno.h \
+  /usr/include/linux/errno.h /usr/include/asm/errno.h \
+  /usr/include/asm-i386/errno.h /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/errno-base.h /usr/include/stdlib.h \
+  /usr/include/sys/types.h /usr/include/bits/types.h \
+  /usr/include/bits/typesizes.h /usr/include/time.h /usr/include/endian.h \
+  /usr/include/bits/endian.h /usr/include/sys/select.h \
+  /usr/include/bits/select.h /usr/include/bits/sigset.h \
+  /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
+  /usr/include/bits/pthreadtypes.h /usr/include/alloca.h \
+  /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+  /usr/include/wchar.h /usr/include/gconv.h \
+  /usr/lib/gcc/i586-suse-linux/4.2.1/include/stdarg.h \
+  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+  /usr/include/bits/stdio.h /usr/include/string.h \
+  /usr/include/bits/string.h /usr/include/bits/string2.h \
+  /usr/include/sys/mman.h /usr/include/bits/mman.h /usr/include/fcntl.h \
+  /usr/include/bits/fcntl.h /usr/include/byteswap.h \
+  /usr/include/bits/byteswap.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/fdt_host.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/fdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/libfdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/libfdt_env.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/include/fdt.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/tools/../include/fdt_support.h \
+  /home/kosta/ltib-p1020rdb_p2020rdb-20101029/rpm/BUILD/u-boot-2009.11-cloud/libfdt/libfdt_internal.h
