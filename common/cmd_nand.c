@@ -315,7 +315,7 @@ printf("Start Test1 _Local_bus_Cylone3\n\r");
 	else
 	{
     
-	   for(i=0;i<=100;i++)
+	   for(i=0;i<=150;i++)
        { 
 	 
 		write_to_PLIS(test_full_packet_mas,input_packet_size);

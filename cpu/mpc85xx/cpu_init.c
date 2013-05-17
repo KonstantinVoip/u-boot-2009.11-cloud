@@ -171,6 +171,10 @@ void cpu_init_f (void)
 #ifdef CONFIG_CPM2
 	config_8560_ioports((ccsr_cpm_t *)CONFIG_SYS_MPC85xx_CPM_ADDR);
 #endif
+    
+	memctl->lcrr = 0x80000002;
+    
+
 
 	/* Map banks 0 and 1 to the FLASH banks 0 and 1 at preliminary
 	 * addresses - these have to be modified later when FLASH size

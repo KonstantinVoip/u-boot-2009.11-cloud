@@ -632,6 +632,8 @@ void board_init_r (gd_t *id, ulong dest_addr)
 	char *s;
 	bd_t *bd;
 	ulong malloc_start;
+	char buf1[32];
+	sys_info_t sysinfo;
     ccsr_lbc_t *lbc = (void *)(CONFIG_SYS_MPC85xx_LBC_ADDR);
 	//printf ("INIT_R\n\r");
 #ifndef CONFIG_SYS_NO_FLASH
@@ -721,6 +723,8 @@ void board_init_r (gd_t *id, ulong dest_addr)
 	asm ("sync ; isync");
 	mem_malloc_init (malloc_start, TOTAL_MALLOC_LEN);
 
+//Set Local_Bus_clock_Divider	
+	get_sys_info(&sysinfo);
 	
 /////////////Inititialiaztion of CYCLONE 3 PLIS///////	
 #if !defined(CONFIG_SYS_NO_FLASH)
@@ -734,7 +738,7 @@ printf("\tCS1\tBR1\t0x%08X\tOR1\t0x%08X \n", lbc->br1, lbc->or1);
 printf("\tCS2\tBR2\t0x%08X\tOR2\t0x%08X \n", lbc->br2, lbc->or2);
 printf("\LCRR\t0x%08X \n", lbc->lcrr);
 printf("\LBCR\t0x%08X \n", lbc->lbcr);
-
+printf("lbcSpeed:%-4s MHz\n", strmhz(buf1, sysinfo.freqLocalBus));
 printf("------------------------------------\n\r");
 
 # if defined(CONFIG_PCU_E) || defined(CONFIG_OXC) || defined(CONFIG_RMU)
