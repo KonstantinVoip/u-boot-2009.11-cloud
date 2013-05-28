@@ -876,6 +876,7 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
 	"ethaddr=00:04:9f:ef:01:01\0"						\
 	"eth1addr=00:04:9f:ef:01:02\0"						\
 	"eth2addr=00:04:9f:ef:01:03\0"						\
+	"eth3addr=00:04:9f:ef:01:55\0"						\
 	"ipaddr=192.168.130.124\0"						\
 	"serverip=192.168.130.128\0"						\
 	"gatewayip=192.168.130.124\0"						\
@@ -904,7 +905,7 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
 	"nandimgsize=400000\0"		\
 	"nandfdtsize=100000\0"		\
 	"usb_phy_type=ulpi\0"		\
-	"vscfw_addr=ef000000\0"	\
+	"vscfw_addr=ef100000\0"	\
 	"othbootargs=ramdisk_size="MK_STR(RAMDISK_SIZE)" cache-sram-size=0x10000\0" \
 	"usbfatboot=setenv bootargs root=/dev/ram rw "	\
 	"console=$consoledev,$baudrate $othbootargs; "	\
@@ -944,8 +945,6 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
 	"bootm $loadaddr - $fdtaddr"
 
 #define CONFIG_HDBOOT			\
-	"setenv bootargs root=/dev/$bdev rw rootdelay=30 "	\
-	"sf probe 0;"		\
 	"sf probe 0;"		\
 	"sf read 1000000 150000 350000;"		\
 	"sf read 2000000 500000 500000;"		\
