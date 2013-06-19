@@ -906,6 +906,7 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
 	"nandfdtsize=100000\0"		\
 	"usb_phy_type=ulpi\0"		\
 	"vscfw_addr=ef100000\0"	\
+	"bootargs=root=/dev/nfs rw nfsroot=192.168.130.128:/tftpboot/ltib ip=192.168.130.124:192.168.130.128:192.168.130.124:255.255.0.0:P2020RDB:eth0:off console=ttyS0,115200 ramdisk_size=700000 cache-sram-size=0x10000\0"	\
 	"othbootargs=ramdisk_size="MK_STR(RAMDISK_SIZE)" cache-sram-size=0x10000\0" \
 	"usbfatboot=setenv bootargs root=/dev/ram rw "	\
 	"console=$consoledev,$baudrate $othbootargs; "	\
