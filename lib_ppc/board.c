@@ -729,8 +729,13 @@ void board_init_r (gd_t *id, ulong dest_addr)
 /////////////Inititialiaztion of CYCLONE 3 PLIS///////	
 #if !defined(CONFIG_SYS_NO_FLASH)
 printf("------------------------------------\n\r");
+
+
+
+#ifdef MPC_P2020 
 printf("CYCLONE3 FPGA Initializtion:\n\r");
 flash_init ();
+#endif 
 
 printf("Hardware LocalBus Configuration:\n\r");
 printf("\tCS0\tBR0\t0x%08X\tOR0\t0x%08X \n", lbc->br0, lbc->or0);

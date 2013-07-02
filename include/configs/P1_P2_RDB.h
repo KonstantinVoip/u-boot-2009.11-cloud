@@ -32,8 +32,8 @@
 
 
 
-                           #define MPC_P2020       1
-    //                     #define RDB_P2020       1
+    //                       #define MPC_P2020       1
+                             #define RDB_P2020       1
 
 
 
@@ -309,7 +309,16 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
 
 #define CONFIG_FLASH_BR_PRELIM	(BR_PHYS_ADDR(CONFIG_SYS_FLASH_BASE_PHYS) | \
 					BR_PS_16 | BR_V)
+
+#ifdef MPC_P2020
 #define CONFIG_FLASH_OR_PRELIM		0xfff80f37
+#endif
+#ifdef RDB_P2020 
+#define CONFIG_FLASH_OR_PRELIM		0xff000ff7
+#endif
+
+
+
 
 #define CONFIG_SYS_FLASH_BANKS_LIST	{CONFIG_SYS_FLASH_BASE_PHYS}
 #define CONFIG_SYS_FLASH_QUIET_TEST
@@ -418,10 +427,15 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
 				| OR_FCM_TRLX \
 				| OR_FCM_EHTR)
 
+
+				
+#ifdef MPC_P2020 				
 #define CONFIG_SYS_BR0_PRELIM		 CONFIG_FLASH_BR_PRELIM		
 #define CONFIG_SYS_OR0_PRELIM 		 CONFIG_FLASH_OR_PRELIM
+#endif
 
-/*				
+
+#ifdef RDB_P2020 
 #ifdef CONFIG_RAMBOOT_NAND
 #define CONFIG_SYS_BR0_PRELIM  CONFIG_NAND_BR_PRELIM  // NAND Base Address 
 #define CONFIG_SYS_OR0_PRELIM  CONFIG_NAND_OR_PRELIM  // NAND Options 
@@ -433,7 +447,7 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
 #define CONFIG_SYS_BR1_PRELIM  CONFIG_NAND_BR_PRELIM  // NAND Base Address 
 #define CONFIG_SYS_OR1_PRELIM  CONFIG_NAND_OR_PRELIM  // NAND Options 
 #endif
-*/
+#endif 
 
 
 #define CONFIG_SYS_VSC7385_BASE	0xffb00000
@@ -444,14 +458,15 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
 #define CONFIG_SYS_VSC7385_BASE_PHYS	CONFIG_SYS_VSC7385_BASE
 #endif
 
-/*
+
+#ifdef RDB_P2020 
 #define CONFIG_SYS_BR2_PRELIM	(BR_PHYS_ADDR(CONFIG_SYS_VSC7385_BASE) \
 							| BR_PS_8 | BR_V)
 #define CONFIG_SYS_OR2_PRELIM	(OR_AM_128KB | OR_GPCM_CSNT | OR_GPCM_XACS | \
 				OR_GPCM_SCY_15 | OR_GPCM_SETA | OR_GPCM_TRLX | \
 				OR_GPCM_EHTR | OR_GPCM_EAD)
-*/
-				
+
+#endif 				
 /* Serial Port - controlled on board with jumper J8
  * open - index 2
  * shorted - index 1
@@ -905,7 +920,7 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
 	"nandimgsize=400000\0"		\
 	"nandfdtsize=100000\0"		\
 	"usb_phy_type=ulpi\0"		\
-	"vscfw_addr=ef100000\0"	\
+	"vscfw_addr=ef000000\0"	\
 	"bootargs=root=/dev/nfs rw nfsroot=192.168.130.128:/tftpboot/ltib ip=192.168.130.124:192.168.130.128:192.168.130.124:255.255.0.0:P2020RDB:eth0:off console=ttyS0,115200 ramdisk_size=700000 cache-sram-size=0x10000\0"	\
 	"othbootargs=ramdisk_size="MK_STR(RAMDISK_SIZE)" cache-sram-size=0x10000\0" \
 	"usbfatboot=setenv bootargs root=/dev/ram rw "	\

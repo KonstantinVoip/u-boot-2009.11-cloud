@@ -172,8 +172,10 @@ void cpu_init_f (void)
 	config_8560_ioports((ccsr_cpm_t *)CONFIG_SYS_MPC85xx_CPM_ADDR);
 #endif
     
+	
+#ifdef  MPC_P2020	
 	memctl->lcrr = 0x80000002;
-    
+#endif    
 
 
 	/* Map banks 0 and 1 to the FLASH banks 0 and 1 at preliminary
