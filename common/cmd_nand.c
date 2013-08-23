@@ -478,6 +478,15 @@ int do_nand(cmd_tbl_t * cmdtp, int flag, int argc, char *argv[])
 		}
 	
 	
+	    if (strcmp(cmd, "test_pr") == 0) 
+		{
+		tes1_finctiond(36,enable_loop);
+		putc('\n');
+		return 0;   
+		}
+	
+	
+	
 	    if (strcmp(cmd, "info") == 0) 
 		{
 		flash_init ();
@@ -499,6 +508,7 @@ U_BOOT_CMD(cyc3, CONFIG_SYS_MAXARGS, 1, do_nand,
 	"test1_512  -static =256*2=512bait ->lBC\n"
     "test1_1514 -static =757*2=1514bait->lBC\n"
 	"test1_1518 -static =759*2=1518bait->lBC\n"
+	"test_pr    -test preambula  ->lBC\n"
 	#if 0
 	"nand read - addr off|partition size\n"
 	"nand write - addr off|partition size\n"
