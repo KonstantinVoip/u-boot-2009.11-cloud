@@ -50,6 +50,7 @@ int find_dev_and_part(const char *id, struct mtd_device **dev,
 
 //Testing_Menu_functions
 void tes1_finctiond(u16 size,u16 parameter_test);
+void test2_function(u16 size,u16 parameter_test);
 
 //Packet_Functions
 void assmble_packet(u16 length);
@@ -328,9 +329,51 @@ printf("Start Test1 _Local_bus_Cylone3\n\r");
    
  } while (ch!='s');    
 
+}
 
+
+void test2_finctiond( u16 size,u16 parameter_test)
+{
+u16 input_packet_size=size;
+char ch;
+u16 i;
+printf("Start Test1 _Local_bus_Cylone3\n\r");
+ do
+ {  
+	ch = getc();
+	if(parameter_test==0)   
+	{
+	write_to_PLIS(test_ethernet_preambula_inverse,input_packet_size);
+	assmble_packet(input_packet_size);
+	}
+	else
+	{
+	   for(i=0;i<=150;i++)
+       { 
+		write_to_PLIS(test_full_packet_mas,input_packet_size);
+		assmble_packet(input_packet_size);
+		udelay(100); 
+	   }
+	 printf("TEST COMPLETE\n\r");
+	}
+   
+ } while (ch!='s');
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 static inline int str2long(char *p, ulong *num)
@@ -486,6 +529,19 @@ int do_nand(cmd_tbl_t * cmdtp, int flag, int argc, char *argv[])
 		}
 	
 	
+	    if (strcmp(cmd, "test_pr_inverse") == 0) 
+		{
+		tes1_finctiond(36,enable_loop);
+		putc('\n');
+		return 0;   
+		}
+	
+	
+	    
+	
+	
+	
+	
 	
 	    if (strcmp(cmd, "info") == 0) 
 		{
@@ -509,6 +565,10 @@ U_BOOT_CMD(cyc3, CONFIG_SYS_MAXARGS, 1, do_nand,
     "test1_1514 -static =757*2=1514bait->lBC\n"
 	"test1_1518 -static =759*2=1518bait->lBC\n"
 	"test_pr    -test preambula  ->lBC\n"
+	"test_pr_inverse    -test preambula inverse  ->lBC\n"
+	
+	 
+	
 	#if 0
 	"nand read - addr off|partition size\n"
 	"nand write - addr off|partition size\n"
