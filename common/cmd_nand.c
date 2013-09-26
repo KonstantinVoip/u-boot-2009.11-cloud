@@ -112,6 +112,8 @@ u16 data_write_success=0x0003;
 void write_to_PLIS(u16 *inpacket_data,u16 data_legth)
 {
 //Conunters
+u16 dannie1400=0;
+u16 l_adress_read1400=1400;
 
 u16 count_dannie30=0;
 
@@ -150,6 +152,10 @@ printf("+++++++++++++++++Write_Iter->%d++++++++++++++++++++++++++++++++++++++\n\
      //ludelay(10000);
     }
 
+	
+	
+	
+	
 //dannie120=__flash_read16(flash_map(l_adress_read120));
 //printf("Read_Iter_120_After30_Success , Num=%d Raddress =0x%x ->Rdata=0x%x|\n\r",l_adress_read120,flash_map(l_adress_read120),dannie120);
 
@@ -184,6 +190,12 @@ printf("+++++++++++++++++Write_Iter->%d++++++++++++++++++++++++++++++++++++++\n\
  	}
 
 write_toPLIS_success();
+//dannie120=__flash_read16(flash_map(l_adress_read120));
+//printf("Read_Iter_120_After30_Success , Num=%d Raddress =0x%x ->Rdata=0x%x|\n\r",l_adress_read120,flash_map(l_adress_read120),dannie120);
+
+dannie1400=k__flash_read16(k_word_flash_map(l_adress_read1400));
+printf("Read_Iter_dannie1400_After30_Success  ->Rdata=0x%x|\n\r",dannie1400);
+
 
 
 }
@@ -254,7 +266,7 @@ void assmble_packet(u16 length)
 	 //dannie800=__flash_read16(flash_map(l_adress_read800));       
       printf("WHILE_Ctenie__1000 =0x%x\n\r",dannie1000);
 	  count_dannie1000++;
-	  if(count_dannie1000==50)break;
+	  if(count_dannie1000==100)break;
 	//printf("WHILE_Ctenie__800 =0x%x\n\r",dannie800);  
     }
 
@@ -263,6 +275,13 @@ void assmble_packet(u16 length)
   
   dannie800=k__flash_read16(k_word_flash_map(l_adress_read800)); 
   printf("Ctenie__800 =0x%x\n\r",dannie800);
+ 
+  dannie1200=k__flash_read16(k_word_flash_map(l_adress_read1200));
+  printf("Razmer_in1200->>0x%x ,Razmer_in1200+1->>0x%x-\n\r",dannie1200,dannie1200+1);
+  
+
+ 
+
   do
   { 
        // plis_raw_data_mas[t]=__flash_read16((void *)(0xff0000cc));
@@ -523,7 +542,7 @@ int do_nand(cmd_tbl_t * cmdtp, int flag, int argc, char *argv[])
 	
 	    if (strcmp(cmd, "test_pr") == 0) 
 		{
-		tes1_finctiond(36,enable_loop);
+		test2_finctiond(36,enable_loop);
 		putc('\n');
 		return 0;   
 		}
