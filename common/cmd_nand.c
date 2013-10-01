@@ -252,8 +252,6 @@ void assmble_packet(u16 length)
   printf("--------------------READ_Iter=%d|size_byte=%d------------------------------\n\r",iteration++,length*2);
 
  
-  
- 
     while(!dannie1000)
     {   	
 		//data_in_memory800=*(volatile unsigned short *)(0xff000640);
@@ -271,8 +269,6 @@ void assmble_packet(u16 length)
     }
 
 
-  
-  
   dannie800=k__flash_read16(k_word_flash_map(l_adress_read800)); 
   printf("Ctenie__800 =0x%x\n\r",dannie800);
  

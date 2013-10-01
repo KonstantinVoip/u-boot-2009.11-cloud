@@ -97,10 +97,10 @@
 #define CONFIG_HARD_SPI
 #define CONFIG_FSL_ESPI
 #define CONFIG_CMD_SF
-//#define CONFIG_SF_DEFAULT_SPEED 10000000     /*10 Ìדצ */
+#define CONFIG_SF_DEFAULT_SPEED 10000000     /*10 Ìדצ */
 //#define CONFIG_SF_DEFAULT_SPEED   20000000     /*20 Ìדצ */
 //#define CONFIG_SF_DEFAULT_SPEED   30000000     /*30 Ìדצ */
-#define CONFIG_SF_DEFAULT_SPEED     40000000     /*40 Ìדצ */
+//#define CONFIG_SF_DEFAULT_SPEED     40000000     /*40 Ìדצ */
 
 #define CONFIG_SF_DEFAULT_MODE 0
 
