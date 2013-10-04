@@ -286,19 +286,27 @@ void assmble_packet(u16 length)
        
 			plis_raw_data_mas[t]=*(volatile unsigned short *)(0xef000320);
         
-			//#if 0
-			if(t<4)
+		    if (length==5)
 			{
 			printf("Read_Iter =%d,Raddress=0x%x -> Rdata= 0x%04x|\n\r",t,0xef000320,plis_raw_data_mas[t] /*test_mas[m]*/ /*data_to_write*/);
+			
 			}
+		    else
+		    {
+		
+				//#if 0
+				if(t<4)
+				{
+				printf("Read_Iter =%d,Raddress=0x%x -> Rdata= 0x%04x|\n\r",t,0xef000320,plis_raw_data_mas[t] /*test_mas[m]*/ /*data_to_write*/);
+				}
               
-			//#if 0 
-			if(t>length-4)
-			{
-			printf("Read_Iter =%d, Raddress=0x%x -> Rdata= 0x%x|\n\r",t,0xef000320,plis_raw_data_mas[t] /*test_mas[m]*/ /*data_to_write*/);
-			}
+				//#if 0 
+				if(t>length-4)
+				{
+				printf("Read_Iter =%d, Raddress=0x%x -> Rdata= 0x%x|\n\r",t,0xef000320,plis_raw_data_mas[t] /*test_mas[m]*/ /*data_to_write*/);
+				}
 			//#endif  
-           
+           }
        t++;
        
         
@@ -507,6 +515,12 @@ int do_nand(cmd_tbl_t * cmdtp, int flag, int argc, char *argv[])
 		}
 	
 	
+	    if (strcmp(cmd, "test1_10") == 0)
+		{
+		tes1_finctiond(5,enable_loop);
+		putc('\n');
+		return 0; 
+		}
 	
 		if (strcmp(cmd, "test1_64") == 0) 
 		{
@@ -536,6 +550,9 @@ int do_nand(cmd_tbl_t * cmdtp, int flag, int argc, char *argv[])
 		}
 	
 	
+	
+	    
+	
 	    if (strcmp(cmd, "test_pr") == 0) 
 		{
 		test2_finctiond(36,enable_loop);
@@ -550,6 +567,8 @@ int do_nand(cmd_tbl_t * cmdtp, int flag, int argc, char *argv[])
 		putc('\n');
 		return 0;   
 		}
+	
+	
 	
 	
 	    
@@ -575,6 +594,7 @@ U_BOOT_CMD(cyc3, CONFIG_SYS_MAXARGS, 1, do_nand,
 	"PLIS Cyclone 3 sub-system",
 	"info  - show configuration\n"
 	"test1_loop -enable/disable loop\n"
+	"test1_10   -static =5*2=  10bait  ->lBC\n"
 	"test1_64   -static =32*2= 64bait  ->lBC\n"
 	"test1_512  -static =256*2=512bait ->lBC\n"
     "test1_1514 -static =757*2=1514bait->lBC\n"
