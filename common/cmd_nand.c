@@ -7,10 +7,8 @@
  * Added 16-bit nand support
  * (C) 2004 Texas Instruments
  */
-
+ 
 #include <common.h>
-
-
 /*
  *
  * New NAND support
@@ -18,9 +16,7 @@
  */
 #include <common.h>
 #include <linux/mtd/mtd.h>
-
 ////////////////////////CYCLONE3 _Testing Include Add///////////////////////////////
-
 #include <cyclone3/elbcTransnmitBuf.h>
 #include <asm-ppc/io.h>
 #include <tsec.h>
@@ -99,15 +95,6 @@ u16 data_write_success=0x0003;
 }
 
 
-
-
-
-
-
-
-
-
-
 ////
 void write_to_PLIS(u16 *inpacket_data,u16 data_legth)
 {
@@ -117,12 +104,18 @@ u16 l_adress_read1400=1400;
 
 u16 count_dannie30=0;
 
+u16 dannie1600=0;
+u16 l_adress_read1600=1600;
 
 u16 dannie30=1;
 u16 dannie120=0;
 
 u16 l_adress_read120=120;
 u16 l_adress_read30=30;
+
+u16 l_adress_read1800=1800;
+u16 dannie1800=0;
+
 
 u16 m=0;
 static u16 iteration;
@@ -149,9 +142,13 @@ printf("+++++++++++++++++Write_Iter->%d++++++++++++++++++++++++++++++++++++++\n\
         dannie30=k__flash_read16(k_word_flash_map(l_adress_read30));
         printf("Ctenie__30 =0x%x\n\r",dannie30);
 
-     //ludelay(10000);
-    }
-
+		dannie1600=k__flash_read16(k_word_flash_map(l_adress_read1600));
+        printf("Ctenie_in_while30_1600 =0x%x\n\r",dannie1600);
+	 //ludelay(10000);
+    
+	}
+        dannie1600=k__flash_read16(k_word_flash_map(l_adress_read1600));
+        printf("Ctenie_after_while30_1600 =0x%x\n\r",dannie1600);
 	
 	
 	
@@ -176,6 +173,14 @@ printf("+++++++++++++++++Write_Iter->%d++++++++++++++++++++++++++++++++++++++\n\
   		// __flash_read16((void *)(0xff0000c8));
  		// printf("0x%x|",inpacket_data[m]);  
 	
+	if (data_legth==5)
+	{
+			printf("Write_Iter =%d, Waddress=0x%x -> Wdata= 0x%04x|\n\r",m,0xef000190,inpacket_data[m] /*test_mas[m]*/ /*data_to_write*/);
+			
+	}
+	else
+	{
+	
 	//#if 0
  		if(m<4)
   		{
@@ -186,8 +191,9 @@ printf("+++++++++++++++++Write_Iter->%d++++++++++++++++++++++++++++++++++++++\n\
   		{
      	printf("Write_Iter =%d, Waddress=0x%x -> Wdata= 0x%04x|\n\r",m,0xef000190,inpacket_data[m] /*test_mas[m]*/ /*data_to_write*/);
      	}    
-
- 	}
+    }    
+	
+  }
 
 write_toPLIS_success();
 //dannie120=__flash_read16(flash_map(l_adress_read120));
@@ -196,15 +202,10 @@ write_toPLIS_success();
 dannie1400=k__flash_read16(k_word_flash_map(l_adress_read1400));
 printf("Read_Iter_dannie1400_After30_Success  ->Rdata=0x%x|\n\r",dannie1400);
 
-
+dannie1800=k__flash_read16(k_word_flash_map(l_adress_read1800));
+printf("dannie1800 ->Rdata=0x%x0|(%d)|\n\r",dannie1800,dannie1800);
 
 }
-
-
-
-
-
-
 
 
 void assmble_packet(u16 length)
@@ -224,6 +225,7 @@ void assmble_packet(u16 length)
   u16 dannie800=0;
   u16 dannie1000=0;
   u16 dannie1200=0;
+  u16 dannie1600=0;
   
   u16 l_adress_read0=0;
   u16 l_adress_read2=2;
@@ -239,14 +241,15 @@ void assmble_packet(u16 length)
   u16 l_adress_read800=800;
   u16 l_adress_read1000=1000;
   u16 l_adress_read1200=1200;
+  u16 l_adress_read1600=1600;
   
   u16 count_dannie1000=0;
   static u16 iteration=0; 
   u16 t=0;
    //Clear Input Buffer packet buffer
   
-  //memset(&plis_raw_data_mas, 0xffff, sizeof(plis_raw_data_mas));
-  //memset(&ip_packet, 0, sizeof(ip_packet));
+  memset(&plis_raw_data_mas, 0x0000, sizeof(plis_raw_data_mas));
+ // memset(&ip_packet, 0, sizeof(ip_packet));
   
   
   printf("--------------------READ_Iter=%d|size_byte=%d------------------------------\n\r",iteration++,length*2);
@@ -258,6 +261,7 @@ void assmble_packet(u16 length)
 		dannie1000=k__flash_read16(k_word_flash_map(l_adress_read1000));
 		if(dannie1000==0xabc0)
 		{
+		
 		dannie1000=0;
 		}
      
@@ -271,6 +275,9 @@ void assmble_packet(u16 length)
 
   dannie800=k__flash_read16(k_word_flash_map(l_adress_read800)); 
   printf("Ctenie__800 =0x%x\n\r",dannie800);
+ 
+  dannie1600=k__flash_read16(k_word_flash_map(l_adress_read1600));
+  printf("Ctenie__1600->>0x%x \n\r",dannie1600);
  
   dannie1200=k__flash_read16(k_word_flash_map(l_adress_read1200));
   printf("Razmer_in1200->>0x%x ,Razmer_in1200+1->>0x%x-\n\r",dannie1200,dannie1200+1);
