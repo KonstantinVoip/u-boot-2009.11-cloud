@@ -622,7 +622,7 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
 
 #if defined(CONFIG_TSEC_ENET)
 #ifndef CONFIG_NET_MULTI
-#define CONFIG_NET_MULTI	1
+#define CONFIG_NET_MULTI	
 #endif
 
 

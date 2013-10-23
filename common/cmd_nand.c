@@ -130,8 +130,8 @@ static u16 iteration;
 		
 	}
 */	
-
-printf("+++++++++++++++++Write_Iter->%d++++++++++++++++++++++++++++++++++++++\n\r",iteration++);
+dannie1600=data_legth*2;
+printf("+++++++++++++++++Write_Iter->%d++++++++++++++++++++++++++++++++\n\r",iteration++);
 
 
 
@@ -142,27 +142,30 @@ printf("+++++++++++++++++Write_Iter->%d++++++++++++++++++++++++++++++++++++++\n\
         dannie30=k__flash_read16(k_word_flash_map(l_adress_read30));
         printf("Ctenie__30 =0x%x\n\r",dannie30);
 
-		dannie1600=k__flash_read16(k_word_flash_map(l_adress_read1600));
-        printf("Ctenie_in_while30_1600 =0x%x\n\r",dannie1600);
+		//dannie1600=k__flash_read16(k_word_flash_map(l_adress_read1600));
+        //printf("Ctenie_in_while30_1600 =0x%x\n\r",dannie1600);
 	 //ludelay(10000);
     
-	}
-        dannie1600=k__flash_read16(k_word_flash_map(l_adress_read1600));
-        printf("Ctenie_after_while30_1600 =0x%x\n\r",dannie1600);
+	}		
+		//dannie1600=k__flash_read16(k_word_flash_map(l_adress_read1600));
+        //printf("Ctenie_after_while30_1600 =0x%x\n\r",dannie1600);
 	
-	
-	
+//write to 1600 packet legt_h  	
+ printf("write_in_dlinna_1600=%d_byte\n\r",dannie1600);  
+//*(volatile unsigned short *)PCI_FIX_ADDR((void *)(0xef000c80)) = data_legth*2;	
+	*(volatile unsigned short *)(0xef000c80) =dannie1600;
 	
 //dannie120=__flash_read16(flash_map(l_adress_read120));
 //printf("Read_Iter_120_After30_Success , Num=%d Raddress =0x%x ->Rdata=0x%x|\n\r",l_adress_read120,flash_map(l_adress_read120),dannie120);
 
 
 // printf("length=%d\n\r",data_legth); 
-
- 
- //#if 0
- 
- 	for(m=0;m<data_legth+1;m++)
+//  *(volatile unsigned short *)(0xef000190) =0xbbcc;//inpacket_data[0];
+//  *(volatile unsigned short *)(0xef000190) =0xddee;//inpacket_data[1];
+  
+  
+// #if 0
+ 	for(m=0;m<data_legth/*+1*/;m++)
  	{
    		// __raw_writew(inpacket_data[m], (void *)(0xff0000c8));
   	    //	*(volatile unsigned short *)(0xff000190) = test_full_packet_mas[m];//inpacket_data[m];
@@ -178,6 +181,14 @@ printf("+++++++++++++++++Write_Iter->%d++++++++++++++++++++++++++++++++++++++\n\
 			printf("Write_Iter =%d, Waddress=0x%x -> Wdata= 0x%04x|\n\r",m,0xef000190,inpacket_data[m] /*test_mas[m]*/ /*data_to_write*/);
 			
 	}
+	if (data_legth==15)
+	{
+			printf("Write_Iter =%d, Waddress=0x%x -> Wdata= 0x%04x|\n\r",m,0xef000190,inpacket_data[m] /*test_mas[m]*/ /*data_to_write*/);
+			
+	}
+	
+	
+	
 	else
 	{
 	
@@ -195,6 +206,8 @@ printf("+++++++++++++++++Write_Iter->%d++++++++++++++++++++++++++++++++++++++\n\
 	
   }
 
+//#endif
+  
 write_toPLIS_success();
 //dannie120=__flash_read16(flash_map(l_adress_read120));
 //printf("Read_Iter_120_After30_Success , Num=%d Raddress =0x%x ->Rdata=0x%x|\n\r",l_adress_read120,flash_map(l_adress_read120),dannie120);
@@ -296,8 +309,16 @@ void assmble_packet(u16 length)
 		    if (length==5)
 			{
 			printf("Read_Iter =%d,Raddress=0x%x -> Rdata= 0x%04x|\n\r",t,0xef000320,plis_raw_data_mas[t] /*test_mas[m]*/ /*data_to_write*/);
-			
+			 
 			}
+		   
+		    if (length==15)
+	        {
+			printf("Read_Iter =%d,Raddress=0x%x -> Rdata= 0x%04x|\n\r",t,0xef000320,plis_raw_data_mas[t] /*test_mas[m]*/ /*data_to_write*/);		
+	        }
+
+
+
 		    else
 		    {
 		
@@ -529,6 +550,15 @@ int do_nand(cmd_tbl_t * cmdtp, int flag, int argc, char *argv[])
 		return 0; 
 		}
 	
+	
+	    if (strcmp(cmd, "test1_30") == 0)
+		{
+		tes1_finctiond(15,enable_loop);
+		putc('\n');
+		return 0; 
+		}
+	    
+	
 		if (strcmp(cmd, "test1_64") == 0) 
 		{
 		tes1_finctiond(32,enable_loop);
@@ -602,6 +632,7 @@ U_BOOT_CMD(cyc3, CONFIG_SYS_MAXARGS, 1, do_nand,
 	"info  - show configuration\n"
 	"test1_loop -enable/disable loop\n"
 	"test1_10   -static =5*2=  10bait  ->lBC\n"
+	"test1_30   -static =15*2= 30bait  ->lBC\n"
 	"test1_64   -static =32*2= 64bait  ->lBC\n"
 	"test1_512  -static =256*2=512bait ->lBC\n"
     "test1_1514 -static =757*2=1514bait->lBC\n"
