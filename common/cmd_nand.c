@@ -64,7 +64,7 @@ static inline void * k_word_flash_map (u16 offset)
 }
 
 
-
+ 
 static inline u16 k__flash_read16(void *addr)
 {
 	return __raw_readw(addr);
@@ -75,9 +75,6 @@ static inline void k__flash_write16(u16 value, void *addr)
 {
 	__raw_writew(value, addr);
 }
-
-
-
 
 
 
@@ -150,25 +147,26 @@ printf("+++++++++++++++++Write_Iter->%d++++++++++++++++++++++++++++++++\n\r",ite
 		//dannie1600=k__flash_read16(k_word_flash_map(l_adress_read1600));
         //printf("Ctenie_after_while30_1600 =0x%x\n\r",dannie1600);
 	
-//write to 1600 packet legt_h  	
- printf("write_in_dlinna_1600=%d_byte\n\r",dannie1600);  
-//*(volatile unsigned short *)PCI_FIX_ADDR((void *)(0xef000c80)) = data_legth*2;	
+    //write to 1600 packet legt_h  	
+    printf("write_in_dlinna_1600=%d_byte\n\r",dannie1600);  
+      //*(volatile unsigned short *)PCI_FIX_ADDR((void *)(0xef000c80)) = data_legth*2;	
 	*(volatile unsigned short *)(0xef000c80) =dannie1600;
 	
 //dannie120=__flash_read16(flash_map(l_adress_read120));
 //printf("Read_Iter_120_After30_Success , Num=%d Raddress =0x%x ->Rdata=0x%x|\n\r",l_adress_read120,flash_map(l_adress_read120),dannie120);
 
 
-// printf("length=%d\n\r",data_legth); 
-//  *(volatile unsigned short *)(0xef000190) =0xbbcc;//inpacket_data[0];
-//  *(volatile unsigned short *)(0xef000190) =0xddee;//inpacket_data[1];
+
+    // printf("length=%d\n\r",data_legth); 
+    // *(volatile unsigned short *)(0xef000190) =0xbbcc;//inpacket_data[0];
+    // *(volatile unsigned short *)(0xef000190) =0xddee;//inpacket_data[1];
   
   
 // #if 0
  	for(m=0;m<data_legth/*+1*/;m++)
  	{
    		// __raw_writew(inpacket_data[m], (void *)(0xff0000c8));
-  	    //	*(volatile unsigned short *)(0xff000190) = test_full_packet_mas[m];//inpacket_data[m];
+  	    //	*(volatile unsigned short *)(0xff000190) = test_full_ packet_mas[m];//inpacket_data[m];
 		
 		  *(volatile unsigned short *)(0xef000190) =inpacket_data[m];
 		//*(volatile unsigned short *)(0xff000190) =inpacket_data[m];
@@ -176,34 +174,66 @@ printf("+++++++++++++++++Write_Iter->%d++++++++++++++++++++++++++++++++\n\r",ite
   		// __flash_read16((void *)(0xff0000c8));
  		// printf("0x%x|",inpacket_data[m]);  
 	
-	if (data_legth==5)
-	{
+	    switch(data_legth)
+	     {
+		case 1 :
+		printf("Write_Iter =%d, Waddress=0x%x -> Wdata= 0x%04x|\n\r",m,0xef000190,inpacket_data[m] /*test_mas[m]*/ /*data_to_write*/);
+		break;
+		
+		case 4 :
+		printf("Write_Iter =%d, Waddress=0x%x -> Wdata= 0x%04x|\n\r",m,0xef000190,inpacket_data[m] /*test_mas[m]*/ /*data_to_write*/);
+		break;
+		
+		case 5 :
+		printf("Write_Iter =%d, Waddress=0x%x -> Wdata= 0x%04x|\n\r",m,0xef000190,inpacket_data[m] /*test_mas[m]*/ /*data_to_write*/);
+		break;
+		
+		case 15 :
+		printf("Write_Iter =%d, Waddress=0x%x -> Wdata= 0x%04x|\n\r",m,0xef000190,inpacket_data[m] /*test_mas[m]*/ /*data_to_write*/);
+		break;
+		
+		default:
+			if(m<4)
+			{
 			printf("Write_Iter =%d, Waddress=0x%x -> Wdata= 0x%04x|\n\r",m,0xef000190,inpacket_data[m] /*test_mas[m]*/ /*data_to_write*/);
-			
-	}
-	if (data_legth==15)
-	{
-			printf("Write_Iter =%d, Waddress=0x%x -> Wdata= 0x%04x|\n\r",m,0xef000190,inpacket_data[m] /*test_mas[m]*/ /*data_to_write*/);
-			
-	}
-	
-	
-	
-	else
-	{
-	
-	//#if 0
- 		if(m<4)
-  		{
-     	printf("Write_Iter =%d, Waddress=0x%x -> Wdata= 0x%04x|\n\r",m,0xef000190,inpacket_data[m] /*test_mas[m]*/ /*data_to_write*/);
-     	}
+			}
     //#endif
-        if(m>data_legth-4)
-  		{
-     	printf("Write_Iter =%d, Waddress=0x%x -> Wdata= 0x%04x|\n\r",m,0xef000190,inpacket_data[m] /*test_mas[m]*/ /*data_to_write*/);
-     	}    
-    }    
+			if(m>data_legth-4)
+			{
+			printf("Write_Iter =%d, Waddress=0x%x -> Wdata= 0x%04x|\n\r",m,0xef000190,inpacket_data[m] /*test_mas[m]*/ /*data_to_write*/);
+			}   
 	
+		break;
+		}
+		
+		
+	    #if 0
+		if (data_legth==5)
+		{
+	    printf("Write_Iter =%d, Waddress=0x%x -> Wdata= 0x%04x|\n\r",m,0xef000190,inpacket_data[m] /*test_mas[m]*/ /*data_to_write*/);
+		}
+		if (data_legth==15)
+		{
+	    printf("Write_Iter =%d, Waddress=0x%x -> Wdata= 0x%04x|\n\r",m,0xef000190,inpacket_data[m] /*test_mas[m]*/ /*data_to_write*/);	
+		}
+	    //#endif
+	
+	
+		//else
+		//{
+	
+			//#if 0
+			if(m<4)
+			{
+			printf("Write_Iter =%d, Waddress=0x%x -> Wdata= 0x%04x|\n\r",m,0xef000190,inpacket_data[m] /*test_mas[m]*/ /*data_to_write*/);
+			}
+    //#endif
+			if(m>data_legth-4)
+			{
+			printf("Write_Iter =%d, Waddress=0x%x -> Wdata= 0x%04x|\n\r",m,0xef000190,inpacket_data[m] /*test_mas[m]*/ /*data_to_write*/);
+			}    
+		//}    
+	  #endif
   }
 
 //#endif
@@ -239,6 +269,9 @@ void assmble_packet(u16 length)
   u16 dannie1000=0;
   u16 dannie1200=0;
   u16 dannie1600=0;
+  u16 dannie1800=1;
+  
+  
   
   u16 l_adress_read0=0;
   u16 l_adress_read2=2;
@@ -255,6 +288,9 @@ void assmble_packet(u16 length)
   u16 l_adress_read1000=1000;
   u16 l_adress_read1200=1200;
   u16 l_adress_read1600=1600;
+  u16 l_adress_read1800=1800;
+  
+  
   
   u16 count_dannie1000=0;
   static u16 iteration=0; 
@@ -306,6 +342,45 @@ void assmble_packet(u16 length)
        
 			plis_raw_data_mas[t]=*(volatile unsigned short *)(0xef000320);
         
+		    switch (length)
+			{
+			case 1:
+			printf("Read_Iter =%d,Raddress=0x%x -> Rdata= 0x%04x|\n\r",t,0xef000320,plis_raw_data_mas[t] /*test_mas[m]*/ /*data_to_write*/);
+			break;
+			
+			case 4:
+			printf("Read_Iter =%d,Raddress=0x%x -> Rdata= 0x%04x|\n\r",t,0xef000320,plis_raw_data_mas[t] /*test_mas[m]*/ /*data_to_write*/);
+			break;
+			
+			case 5:
+			printf("Read_Iter =%d,Raddress=0x%x -> Rdata= 0x%04x|\n\r",t,0xef000320,plis_raw_data_mas[t] /*test_mas[m]*/ /*data_to_write*/);
+			break;
+			
+			case 15:
+			printf("Read_Iter =%d,Raddress=0x%x -> Rdata= 0x%04x|\n\r",t,0xef000320,plis_raw_data_mas[t] /*test_mas[m]*/ /*data_to_write*/);
+			break;
+			
+			default:
+				if(t<4)
+				{
+				printf("Read_Iter =%d,Raddress=0x%x -> Rdata= 0x%04x|\n\r",t,0xef000320,plis_raw_data_mas[t] /*test_mas[m]*/ /*data_to_write*/);
+				}
+              
+				//#if 0 
+				if(t>length-4)
+				{
+				printf("Read_Iter =%d, Raddress=0x%x -> Rdata= 0x%x|\n\r",t,0xef000320,plis_raw_data_mas[t] /*test_mas[m]*/ /*data_to_write*/);
+				}
+			
+			
+			
+			
+			
+			break;
+			
+			}
+		
+		#if 0
 		    if (length==5)
 			{
 			printf("Read_Iter =%d,Raddress=0x%x -> Rdata= 0x%04x|\n\r",t,0xef000320,plis_raw_data_mas[t] /*test_mas[m]*/ /*data_to_write*/);
@@ -335,11 +410,21 @@ void assmble_packet(u16 length)
 				}
 			//#endif  
            }
-       t++;
+        #endif
+
+
+	  t++;
        
         
-  } while(t<length+1);
+  } while(t<length/*+1*/);
 
+    *(volatile unsigned short *)(0xef000E10) =0xffff;
+    *(volatile unsigned short *)(0xef000E10) =0x0000;
+  /////
+    dannie1800=k__flash_read16(k_word_flash_map(l_adress_read1800));
+    printf("++Register_in1800->>0x%x\n\r",dannie1800);
+  
+   
   
 }
 
@@ -542,6 +627,26 @@ int do_nand(cmd_tbl_t * cmdtp, int flag, int argc, char *argv[])
 		  return 0;   
 		}
 	
+	    if (strcmp(cmd, "test1_1") == 0)
+		{
+		tes1_finctiond(1,enable_loop);
+		putc('\n');
+		return 0; 
+		}
+		
+	
+	
+	    if (strcmp(cmd, "test1_8") == 0)
+		{
+		tes1_finctiond(4,enable_loop);
+		putc('\n');
+		return 0; 
+		}
+	
+	
+	
+	    
+	
 	
 	    if (strcmp(cmd, "test1_10") == 0)
 		{
@@ -558,6 +663,13 @@ int do_nand(cmd_tbl_t * cmdtp, int flag, int argc, char *argv[])
 		return 0; 
 		}
 	    
+		if (strcmp(cmd, "test1_31") == 0)
+		{
+		tes1_finctiond(16,enable_loop);
+		putc('\n');
+		return 0; 
+		}
+		
 	
 		if (strcmp(cmd, "test1_64") == 0) 
 		{
@@ -631,8 +743,11 @@ U_BOOT_CMD(cyc3, CONFIG_SYS_MAXARGS, 1, do_nand,
 	"PLIS Cyclone 3 sub-system",
 	"info  - show configuration\n"
 	"test1_loop -enable/disable loop\n"
+	"test1_1   -static =1*2=  2bait  ->lBC\n"
+	"test1_8   -static =4*2=  8bait  ->lBC\n"
 	"test1_10   -static =5*2=  10bait  ->lBC\n"
 	"test1_30   -static =15*2= 30bait  ->lBC\n"
+	"test1_31   -static =16*2= 32bait  ->lBC\n"
 	"test1_64   -static =32*2= 64bait  ->lBC\n"
 	"test1_512  -static =256*2=512bait ->lBC\n"
     "test1_1514 -static =757*2=1514bait->lBC\n"

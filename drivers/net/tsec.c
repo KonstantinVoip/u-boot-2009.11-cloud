@@ -67,7 +67,8 @@ static int tsec_miiphy_read(char *devname, unsigned char addr,unsigned char reg,
 static int tsec_mcast_addr (struct eth_device *dev, u8 mcast_mac, u8 set);
 #endif
 
-/* Default initializations for TSEC controllers. */
+/*Default initializations for TSEC controllers.*/
+
 
 static struct tsec_info_struct tsec_info[] = {
 #ifdef CONFIG_TSEC1
@@ -83,7 +84,7 @@ static struct tsec_info_struct tsec_info[] = {
 		.devname = CONFIG_MPC85XX_FEC_NAME,
 		.phyaddr = FEC_PHY_ADDR,
 		.flags = FEC_FLAGS
-	},			/* FEC */
+	},			        /* FEC */
 #endif
 #ifdef CONFIG_TSEC3
 	STD_TSEC_INFO(3),	/* TSEC3 */
@@ -92,6 +93,8 @@ static struct tsec_info_struct tsec_info[] = {
 	STD_TSEC_INFO(4),	/* TSEC4 */
 #endif
 };
+
+
 
 int tsec_eth_init(bd_t *bis, struct tsec_info_struct *tsecs, int num)
 {
@@ -148,13 +151,13 @@ int tsec_initialize(bd_t * bis, struct tsec_info_struct *tsec_info)
 	dev->mcast = tsec_mcast_addr;
 #endif
     printf("+++++++++2tsec_initialize\n");
-	/* Tell u-boot to get the addr from the env */
+	/*Tell u-boot to get the addr from the env */
 	for (i = 0; i < 6; i++)
 		dev->enetaddr[i] = 0;
 
 	eth_register(dev);
 
-	/* Reset the MAC */
+	/*Reset the MAC */
 	priv->regs->maccfg1 |= MACCFG1_SOFT_RESET;
 	udelay(2);  /* Soft Reset must be asserted for 3 TX clocks */
 	priv->regs->maccfg1 &= ~(MACCFG1_SOFT_RESET);
@@ -164,7 +167,7 @@ int tsec_initialize(bd_t * bis, struct tsec_info_struct *tsec_info)
 	miiphy_register(dev->name, tsec_miiphy_read, tsec_miiphy_write);
 #endif
 
-	/* Try to initialize PHY here, and return */
+	/*Try to initialize PHY here, and return */
 	return init_phy(dev);
 }
 
@@ -302,7 +305,6 @@ static int init_phy(struct eth_device *dev)
 	struct phy_info *curphy;
 	volatile tsec_mdio_t *phyregs = priv->phyregs;
 	volatile tsec_t *regs = priv->regs;
-
 	/* Assign a Physical address to the TBI */
 	regs->tbipa = CONFIG_SYS_TBIPA_VALUE;
 	asm("sync");
@@ -314,8 +316,7 @@ static int init_phy(struct eth_device *dev)
 	asm("sync");
 	while (priv->phyregs->miimind & MIIMIND_BUSY) ;
 
-	/* Get the cmd structure corresponding to the attached
-	 * PHY */
+	/* Get the cmd structure corresponding to the attached PHY */
 	curphy = get_phy_info(dev);
     
 	if (curphy == NULL) {
