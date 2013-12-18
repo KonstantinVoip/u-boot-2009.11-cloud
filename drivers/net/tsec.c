@@ -156,7 +156,7 @@ int tsec_initialize(bd_t * bis, struct tsec_info_struct *tsec_info)
 		dev->enetaddr[i] = 0;
 
 	eth_register(dev);
-
+ 
 	/*Reset the MAC */
 	priv->regs->maccfg1 |= MACCFG1_SOFT_RESET;
 	udelay(2);  /* Soft Reset must be asserted for 3 TX clocks */
@@ -182,7 +182,7 @@ int tsec_init(struct eth_device *dev, bd_t * bd)
 	char tmpbuf[MAC_ADDR_LEN];
 	int i;
 	struct tsec_private *priv = (struct tsec_private *)dev->priv;
-	volatile tsec_t *regs = priv->regs;
+	volatile tsec_t *regs = priv->regs;  
 
 	/* Make sure the controller is stopped */
 	tsec_halt(dev);

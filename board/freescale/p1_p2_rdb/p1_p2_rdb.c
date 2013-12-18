@@ -54,7 +54,7 @@ DECLARE_GLOBAL_DATA_PTR;
  биты с 16 по 31 ->>Reserved
  0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31
  0 0 0 0 0 0 1 0 0 0  0  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 
-Тоже самое с выстовлением портов на вход и выход
+ Тоже самое с выстовлением портов на вход и выход
 */
 
 ///////////////////////////////////////MPC_P2020_GPIO_CONFIGURATION//////////////////////////////
@@ -116,14 +116,7 @@ unsigned long get_board_sys_clk(ulong dummy)
 	return 0;
 }
 
-#ifdef CONFIG_MMC
-int board_early_init_f (void)
-{
-	volatile ccsr_gur_t *gur = (void *)(CONFIG_SYS_MPC85xx_GUTS_ADDR);
-	setbits_be32(&gur->pmuxcr,(MPC85xx_PMUXCR_SDHC_CD |MPC85xx_PMUXCR_SDHC_WP));
-	return 0;
-}
-#endif
+ 
 
 int checkboard (void)
 {

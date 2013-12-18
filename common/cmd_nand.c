@@ -126,8 +126,16 @@ static u16 iteration;
 	pkt[i]=inpacket_data[i];
 		
 	}
-*/	
+*/
+if(data_legth==16)
+{	
+//input_hex
+dannie1600=31;//31 byte
+}
+else
+{
 dannie1600=data_legth*2;
+}
 printf("+++++++++++++++++Write_Iter->%d++++++++++++++++++++++++++++++++\n\r",iteration++);
 
 
@@ -261,6 +269,7 @@ void assmble_packet(u16 length)
   u16 dannie8=0;
   u16 dannie10=0;
   u16 dannie12=0; 
+  u16 dannie20=0;
   u16 dannie30=1;
   u16 dannie400=0;
   u16 dannie100=0;
@@ -279,6 +288,7 @@ void assmble_packet(u16 length)
   u16 l_adress_read6=6;
   u16 l_adress_read8=8;
   u16 l_adress_read10=10;
+  u16 l_adress_read20=20;
   u16 l_adress_read12=12;
   u16 l_adress_read30=30;
   u16 l_adress_read100=100;
@@ -302,7 +312,7 @@ void assmble_packet(u16 length)
   
   
   printf("--------------------READ_Iter=%d|size_byte=%d------------------------------\n\r",iteration++,length*2);
-
+  
  
     while(!dannie1000)
     {   	
@@ -328,6 +338,9 @@ void assmble_packet(u16 length)
   dannie1600=k__flash_read16(k_word_flash_map(l_adress_read1600));
   printf("Ctenie__1600->>0x%x \n\r",dannie1600);
  
+  dannie20=k__flash_read16(k_word_flash_map(l_adress_read20));
+  printf("+Razmer_in20->>0x%x ,Razmer_in20+1->>0x%x+\n\r",dannie20,dannie20+1);
+   
   dannie1200=k__flash_read16(k_word_flash_map(l_adress_read1200));
   printf("Razmer_in1200->>0x%x ,Razmer_in1200+1->>0x%x-\n\r",dannie1200,dannie1200+1);
   
