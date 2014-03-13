@@ -178,7 +178,7 @@ int eth_register(struct eth_device* dev)
 		for (d=eth_devices; d->next!=eth_devices; d=d->next);
 		d->next = dev;
 	}
-    printf("++++++++++++++3eth_register\n");
+    printf("+++++3eth_register+++++\n\r");
 	dev->state = ETH_STATE_INIT;
 	dev->next  = eth_devices;
 

@@ -97,10 +97,11 @@
 #define CONFIG_HARD_SPI
 #define CONFIG_FSL_ESPI
 #define CONFIG_CMD_SF
-#define CONFIG_SF_DEFAULT_SPEED 10000000     /*10 Ìדצ */
-//#define CONFIG_SF_DEFAULT_SPEED   20000000     /*20 Ìדצ */
-//#define CONFIG_SF_DEFAULT_SPEED   30000000     /*30 Ìדצ */
-//#define CONFIG_SF_DEFAULT_SPEED     40000000     /*40 Ìדצ */
+//#define CONFIG_SF_DEFAULT_SPEED      10000000     /*10 Ìדצ */
+//#define CONFIG_SF_DEFAULT_SPEED      20000000     /*20 Ìדצ */
+// #define CONFIG_SF_DEFAULT_SPEED    33000000      /*33 Ìדצ */
+    #define CONFIG_SF_DEFAULT_SPEED    66666666     /*66 Ìדצ */
+ //#define CONFIG_SF_DEFAULT_SPEED     40000000     /*40 Ìדצ */
 
 #define CONFIG_SF_DEFAULT_MODE 0
 
@@ -702,7 +703,7 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
 	#define CONFIG_ENV_IS_IN_SPI_FLASH	1
 	#define CONFIG_ENV_SPI_BUS		0
 	#define CONFIG_ENV_SPI_CS		0
-	#define CONFIG_ENV_SPI_MAX_HZ		10000000
+	#define CONFIG_ENV_SPI_MAX_HZ		8000000
 	#define CONFIG_ENV_SPI_MODE		0
 	#define CONFIG_ENV_SIZE			0x2000		/* 8KB */
 	#define CONFIG_ENV_OFFSET		0x100000	/* 1MB */
@@ -895,6 +896,7 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
 	"eth1addr=00:04:9f:ef:01:02\0"						\
 	"eth2addr=00:04:9f:ef:01:03\0"						\
 	"eth3addr=00:04:9f:ef:01:55\0"						\
+	"kysipaddr=192.169.120.170\0"                       \
 	"ipaddr=192.168.130.124\0"						\
 	"serverip=192.168.130.128\0"						\
 	"gatewayip=192.168.130.124\0"						\
@@ -966,7 +968,7 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
 #define CONFIG_HDBOOT			\
 	"sf probe 0;"		\
 	"sf read 1000000 150000 350000;"		\
-	"sf read 2000000 500000 500000;"		\
+	"sf read 2000000 500000 600000;"		\
 	"sf read C00000  B00000 10000;"		\
 	"bootm   1000000 2000000 C00000;"	
 	

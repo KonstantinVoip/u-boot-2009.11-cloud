@@ -55,8 +55,7 @@
 
 #define ESPI_MAX_DATA_TRANSFER_LEN 0xFFF0
 
-struct spi_slave *spi_setup_slave(unsigned int bus, unsigned int cs,
-		unsigned int max_hz, unsigned int mode)
+struct spi_slave *spi_setup_slave(unsigned int bus, unsigned int cs,unsigned int max_hz, unsigned int mode)
 {
 	volatile ccsr_espi_t *espi = (void *)(CONFIG_SYS_MPC85xx_ESPI_ADDR);
 	struct spi_slave *slave;
@@ -66,16 +65,41 @@ struct spi_slave *spi_setup_slave(unsigned int bus, unsigned int cs,
 	int i;
 
 	if (!spi_cs_is_valid(bus, cs))
+	{
 		return NULL;
-
+	}	
+		
 	slave = malloc(sizeof(struct spi_slave));
 	if (!slave)
+	{
 		return NULL;
-
+    } 
+		
 	slave->bus = bus;
 	slave->cs = cs;
 	slave->max_transfer_length = ESPI_MAX_DATA_TRANSFER_LEN;
 
+	printf("------------------------------------------\n\r");
+	printf("SPI_INITIALIZATION:\n\r");
+	
+	//ip_to_string (NetServerIP, tmp);
+	//printf("+setenv_eth3addr+\n\r");
+	//setenv ("eth3addr", "012345678");
+	
+	
+	espi->event = 0xffffffff;	/* Clear all eSPI events */
+	espi->mask =  0x00000000;	/* Mask  all eSPI interrupts */
+	
+	
+	//Configure SPMODE to enable normal operation, eSPI enabled.
+	espi->mode=0x8000100F;
+	espi->csmode[0]=0x21170008;
+	
+    
+	printf("espi->csmode[cs] = 0x%x,cs=%d\n\r",espi->csmode[cs],cs);
+	printf("------------------------------------------\n\r");
+
+#if 0	
 	/* Enable eSPI interface */
 	espi->mode = ESPI_MODE_RXTHR(3) | ESPI_MODE_TXTHR(4) | ESPI_MODE_EN;
 
@@ -91,38 +115,59 @@ struct spi_slave *spi_setup_slave(unsigned int bus, unsigned int cs,
 		| ESPI_CSMODE_CI_INACTIVEHIGH | ESPI_CSMODE_CP_BEGIN_EDGCLK
 		| ESPI_CSMODE_REV_MSB_FIRST | ESPI_CSMODE_LEN(0xF));
     
-		
-	//espi->csmode[cs]=0x1000000;	
+			
+	printf("------------------------------------------\n\r");
+	printf("SPI_INITIALIZATION:\n\r");
+	printf("------------------------------------------\n\r");
+	//printf("espi->csmode[cs] = 0x%x\n\r",espi->csmode[cs]);	
 	
-	printf("Init_ ESPI_INITIALIZATION , espi->csmode[cs] = 0x%x\n\r",espi->csmode[cs]);	
-		
+	
+	
 	/* Set eSPI BRG clock source */
 	get_sys_info(&sysinfo);
-	spibrg = sysinfo.freqSystemBus / 2;
+	   
 	
-	printf("max_hz=0x%x,spibrg =0x%x\n\r",max_hz,spibrg);
+	
+   /*Input Parametr 
+	*for the SPI formula  |System_Clk =spibrg
+	*Fmax = System_Clk/[(SPMODEx[PMx]+1)*2]   ->when SPMODE[DIV16x]=0
+	*Fmax = System_Clk/[(SPMODEx[PMx]+1)*2*16]->when SPMODE[DIV16x]=1
+	*
+	*
+	*/
+
+    //spibrg=(CCB_clk/2)
+    spibrg = sysinfo.freqSystemBus / 2;
+	
+	printf("max_hz=%d(MHZ),spibrg=%d(MHZ)|",(max_hz/1000000),(spibrg/1000000));
 	
 	if ((spibrg / max_hz) > 32) 
 	{
 		espi->csmode[cs] |= ESPI_CSMODE_DIV16;
 		pm = spibrg / (max_hz * 16 * 2);
 
-		
 		if (pm > 16) 
 		{
 			pm = 16;
-			//debug("Requested speed is too low: %d Hz" " %d Hz is used.\n", max_hz, spibrg / (32 * 16));
 		    printf("Requested speed is too low: %d Hz" " %d Hz is used.\n", max_hz, spibrg / (32 * 16));
 		
 		}
 	} 
 	else
-		pm = spibrg / (max_hz * 2);
+    {
+	pm = spibrg / (max_hz * 2);
+	}
+	///////////////////////////////////////////////////
 	if (pm)
+	{
 		pm--;
-	printf("pm= %s,0x%x\n\r",pm,pm);
+	}
+	printf("pm=0x%x\n\r",pm);
 	espi->csmode[cs] |= ESPI_CSMODE_PM(pm);
-    printf("Requested speed is: %d Hz" " %d Hz is used.\n", max_hz, spibrg / (32 * 16));
+    
+	
+	
+	//printf("Requested speed is: %d Hz" " %d Hz is used.\n", max_hz, spibrg / (32 * 16));
 	/* Set eSPI mode */
 	if (mode & SPI_CPHA)
 		espi->csmode[cs] |= ESPI_CSMODE_CP_BEGIN_EDGCLK;
@@ -134,7 +179,10 @@ struct spi_slave *spi_setup_slave(unsigned int bus, unsigned int cs,
 
 	/* Character length in bits, between 0x3~0xf, i.e. 4bits~16bits */
 	espi->csmode[cs] |= ESPI_CSMODE_LEN(7);
-    printf("END_ ESPI_INITIALIZATION , espi->csmode[cs] = 0x%x\n\r",espi->csmode[cs]);	
+    printf("espi->csmode[cs] = 0x%x,cs=\n\r",espi->csmode[cs],cs);	
+	printf("------------------------------------------\n\r");
+
+#endif
 	return slave;
 }
 

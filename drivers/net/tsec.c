@@ -30,6 +30,9 @@ static uint rxIdx;		/* index of the current RX buffer */
 static uint txIdx;		/* index of the current TX buffer */
 
 
+#define RCTRL_PromiscEN           0x00000008
+
+
 typedef volatile struct rtxbd {
 	txbd8_t txbd[TX_BUF_CNT];
 	rxbd8_t rxbd[PKTBUFSRX];
@@ -150,7 +153,7 @@ int tsec_initialize(bd_t * bis, struct tsec_info_struct *tsec_info)
 #ifdef CONFIG_MCAST_TFTP
 	dev->mcast = tsec_mcast_addr;
 #endif
-    printf("+++++++++2tsec_initialize\n");
+    printf("+++++++++2tsec_initialize++++\n");
 	/*Tell u-boot to get the addr from the env */
 	for (i = 0; i < 6; i++)
 		dev->enetaddr[i] = 0;
@@ -162,6 +165,12 @@ int tsec_initialize(bd_t * bis, struct tsec_info_struct *tsec_info)
 	udelay(2);  /* Soft Reset must be asserted for 3 TX clocks */
 	priv->regs->maccfg1 &= ~(MACCFG1_SOFT_RESET);
 
+	
+    //printf("!!!!!!!!!!!!!!! promisc_enable_168!!!!!!!!!!!!!!!!!\n");
+	//priv->regs->rctrl=0x00000008; 
+	
+	
+	
 #if defined(CONFIG_MII) || defined(CONFIG_CMD_MII) \
 	&& !defined(BITBANGMII)
 	miiphy_register(dev->name, tsec_miiphy_read, tsec_miiphy_write);
@@ -184,6 +193,8 @@ int tsec_init(struct eth_device *dev, bd_t * bd)
 	struct tsec_private *priv = (struct tsec_private *)dev->priv;
 	volatile tsec_t *regs = priv->regs;  
 
+	//printf("?++tsec_init++?\n\r");
+	
 	/* Make sure the controller is stopped */
 	tsec_halt(dev);
 
@@ -211,6 +222,10 @@ int tsec_init(struct eth_device *dev, bd_t * bd)
 	rxIdx = 0;
 	txIdx = 0;
 
+	
+	//printf("!!!!!!!!!!!!!!! promisc_enable_224!!!!!!!!!!!!!!!!!\n");
+	regs->rctrl=0x00000008; 
+	
 	/* Clear out (for the most part) the other registers */
 	init_registers(regs);
 
@@ -308,7 +323,7 @@ static int init_phy(struct eth_device *dev)
 	/* Assign a Physical address to the TBI */
 	regs->tbipa = CONFIG_SYS_TBIPA_VALUE;
 	asm("sync");
-    printf("++++++++++++++++4init_phy\n"); 
+    printf("++++++4init_phy+++++\n\r"); 
 	/* Reset MII (due to new addresses) */
 	priv->phyregs->miimcfg = MIIMCFG_RESET;
 	asm("sync");
@@ -791,8 +806,14 @@ static void init_registers(volatile tsec_t * regs)
 	regs->hash.gaddr6 = 0;
 	regs->hash.gaddr7 = 0;
 
-	regs->rctrl = 0x00000000;
-
+	
+	
+	//
+	//regs->rctrl = 0x00000000;
+    printf("!!!!!!!!!!!!!!! promisc_enable!!!!!!!!!!!!!!!!!\n");
+	regs->rctrl=0x00000008; 
+	
+	
 	/* Init RMON mib registers */
 	memset((void *)&(regs->rmon), 0, sizeof(rmon_mib_t));
 
@@ -815,7 +836,7 @@ static void adjust_link(struct eth_device *dev)
 {
 	struct tsec_private *priv = (struct tsec_private *)dev->priv;
 	volatile tsec_t *regs = priv->regs;
-    printf("+++++++++++++++++7adjust_link\n");
+    //printf("+++++++++++++++++7adjust_link\n");
 	if (priv->link) {
 		if (priv->duplexity != 0)
 			regs->maccfg2 |= MACCFG2_FULL_DUPLEX;
@@ -860,7 +881,7 @@ static void startup_tsec(struct eth_device *dev)
 	int i;
 	struct tsec_private *priv = (struct tsec_private *)dev->priv;
 	volatile tsec_t *regs = priv->regs;
-     printf("+++++++++++++++++++++8startup_tsec\n");
+    printf("+++++++8startup_tsec++++++\n\r");
 	/* Point to the buffer descriptors */
 	regs->tbase = (unsigned int)(&rtx.txbd[txIdx]);
 	regs->rbase = (unsigned int)(&rtx.rxbd[rxIdx]);
@@ -919,11 +940,16 @@ static int tsec_send(struct eth_device *dev, volatile void *packet, int length)
 		}
 	}
 
+	
+	
+	
 	rtx.txbd[txIdx].bufPtr = (uint) packet;
 	rtx.txbd[txIdx].length = length;
-	rtx.txbd[txIdx].status |=
-	    (TXBD_READY | TXBD_LAST | TXBD_CRC | TXBD_INTERRUPT);
+	rtx.txbd[txIdx].status |=(TXBD_READY | TXBD_LAST | TXBD_CRC | TXBD_INTERRUPT);
 
+	
+	//printf("+tsec_send_len=%d+\n\r",length);
+	
 	/* Tell the DMA to go */
 	regs->tstat = TSTAT_CLEAR_THALT;
 
@@ -947,28 +973,31 @@ static int tsec_recv(struct eth_device *dev)
 	struct tsec_private *priv = (struct tsec_private *)dev->priv;
 	volatile tsec_t *regs = priv->regs;
 
-	while (!(rtx.rxbd[rxIdx].status & RXBD_EMPTY)) {
+	while (!(rtx.rxbd[rxIdx].status & RXBD_EMPTY)) 
+	{
 
 		length = rtx.rxbd[rxIdx].length;
 
 		/* Send the packet up if there were no errors */
-		if (!(rtx.rxbd[rxIdx].status & RXBD_STATS)) {
+		if (!(rtx.rxbd[rxIdx].status & RXBD_STATS)) 
+		{
 			NetReceive(NetRxPackets[rxIdx], length - 4);
-		} else {
-			printf("Got error %x\n",
-			       (rtx.rxbd[rxIdx].status & RXBD_STATS));
+		}
+		else
+		{
+			printf("Got error %x\n",(rtx.rxbd[rxIdx].status & RXBD_STATS));
 		}
 
 		rtx.rxbd[rxIdx].length = 0;
 
 		/* Set the wrap bit if this is the last element in the list */
-		rtx.rxbd[rxIdx].status =
-		    RXBD_EMPTY | (((rxIdx + 1) == PKTBUFSRX) ? RXBD_WRAP : 0);
+		rtx.rxbd[rxIdx].status = RXBD_EMPTY | (((rxIdx + 1) == PKTBUFSRX) ? RXBD_WRAP : 0);
 
 		rxIdx = (rxIdx + 1) % PKTBUFSRX;
 	}
 
-	if (regs->ievent & IEVENT_BSY) {
+	if (regs->ievent & IEVENT_BSY)
+	{
 		regs->ievent = IEVENT_BSY;
 		regs->rstat = RSTAT_CLEAR_RHALT;
 	}

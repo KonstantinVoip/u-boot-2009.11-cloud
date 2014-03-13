@@ -54,7 +54,7 @@ static int do_spi_flash_probe(int argc, char *argv[])
 		if (*argv[3] == 0 || *endp != 0)
 			goto usage;
 	}
-    printf("Speed=%x [HZ] ,Mode =%x \n",speed,mode );
+    //printf("Speed=%x [HZ] ,Mode =%x \n",speed,mode );
 	new = spi_flash_probe(bus, cs, speed, mode);
 	if (!new) {
 		printf("Failed to initialize SPI flash at %u:%u\n", bus, cs);

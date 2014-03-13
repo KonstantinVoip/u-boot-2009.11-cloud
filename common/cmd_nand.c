@@ -77,14 +77,11 @@ static inline void k__flash_write16(u16 value, void *addr)
 }
 
 
-
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void write_toPLIS_success()
 {
 u16 l_adress_write_success=30;
 u16 data_write_success=0x0003;	
-
-
      *(volatile unsigned short *)PCI_FIX_ADDR((void *)(0xef00003c)) = 0x0003; 
    //*(volatile unsigned short *)PCI_FIX_ADDR((void *)(0xff00003c)) = 0x0003;
    //printf("Write_sucess Num=%d Waddress=0x%x -> Wdata= 0x%x|\n\r",l_adress_write_success,flash_map(l_adress_write_success),/*data_to_write*/ /*test_mas[m]*/data_write_success);	
@@ -92,7 +89,7 @@ u16 data_write_success=0x0003;
 }
 
 
-////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void write_to_PLIS(u16 *inpacket_data,u16 data_legth)
 {
 //Conunters
@@ -509,19 +506,6 @@ printf("Start Test1 _Local_bus_Cylone3\n\r");
  } while (ch!='s');
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

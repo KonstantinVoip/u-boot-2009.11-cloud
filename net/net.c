@@ -1306,6 +1306,15 @@ NetReceive(volatile uchar * inpkt, int len)
 	NetRxPacketLen = len;
 	et = (Ethernet_t *)inpkt;
 
+	
+	
+	
+	
+	//printf("NET_rx_len=%d\n\r",NetRxPacketLen);
+	//printf("et->et_dest[6]=%x\n\r",et->et_dest);
+	
+	
+	
 	/* too small packet? */
 	if (len < ETHER_HDR_SIZE)
 		return;
@@ -1333,12 +1342,12 @@ NetReceive(volatile uchar * inpkt, int len)
 
 	debug("packet received\n");
 
-	if (x < 1514) {
+	if (x < 1514) 
+	{
 		/*
 		 *	Got a 802 packet.  Check the other protocol field.
 		 */
 		x = ntohs(et->et_prot);
-
 		ip = (IP_t *)(inpkt + E802_HDR_SIZE);
 		len -= E802_HDR_SIZE;
 
@@ -1388,7 +1397,8 @@ NetReceive(volatile uchar * inpkt, int len)
 			return;
 	}
 
-	switch (x) {
+	switch (x) 
+	{
 
 	case PROT_ARP:
 		/*
@@ -1569,7 +1579,8 @@ NetReceive(volatile uchar * inpkt, int len)
 		 * configuration might be wrong. But I'm not really
 		 * sure if there aren't any other situations.
 		 */
-		if (ip->ip_p == IPPROTO_ICMP) {
+		if (ip->ip_p == IPPROTO_ICMP)
+		{
 			ICMP_t *icmph = (ICMP_t *)&(ip->udp_src);
 
 			switch (icmph->type) {
@@ -1614,7 +1625,8 @@ NetReceive(volatile uchar * inpkt, int len)
 		}
 
 #ifdef CONFIG_UDP_CHECKSUM
-		if (ip->udp_xsum != 0) {
+		if (ip->udp_xsum != 0)
+		{
 			ulong   xsum;
 			ushort *sumptr;
 			ushort  sumlen;

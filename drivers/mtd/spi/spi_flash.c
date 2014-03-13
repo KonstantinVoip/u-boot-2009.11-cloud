@@ -119,8 +119,7 @@ int spi_flash_cmd_read(struct spi_slave *spi, const u8 *cmd,
 	return ret;
 }
 
-int spi_flash_cmd_write(struct spi_slave *spi, const u8 *cmd, size_t cmd_len,
-		const void *data, size_t data_len)
+int spi_flash_cmd_write(struct spi_slave *spi, const u8 *cmd, size_t cmd_len,const void *data, size_t data_len)
 {
 	unsigned long flags = SPI_XFER_BEGIN;
 	int ret;
@@ -184,8 +183,7 @@ int spi_flash_read_common(struct spi_flash *flash, const u8 *cmd,
 	return ret;
 }
 
-struct spi_flash *spi_flash_probe(unsigned int bus, unsigned int cs,
-		unsigned int max_hz, unsigned int spi_mode)
+struct spi_flash *spi_flash_probe(unsigned int bus, unsigned int cs,unsigned int max_hz, unsigned int spi_mode)
 {
 	struct spi_slave *spi;
 	struct spi_flash *flash;
@@ -209,8 +207,7 @@ struct spi_flash *spi_flash_probe(unsigned int bus, unsigned int cs,
 	if (ret)
 		goto err_read_id;
 
-	printf("SF: Got idcode %02x %02x %02x %02x %02x\n", idcode[0],
-			idcode[1], idcode[2], idcode[3], idcode[4]);
+	printf("SF: Got idcode %02x %02x %02x %02x %02x\n", idcode[0],idcode[1], idcode[2], idcode[3], idcode[4]);
 
 	switch (idcode[0]) {
 #ifdef CONFIG_SPI_FLASH_SPANSION
