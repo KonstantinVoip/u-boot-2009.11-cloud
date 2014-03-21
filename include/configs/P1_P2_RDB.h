@@ -32,8 +32,8 @@
 
  
 
-                               #define MPC_P2020       1
-    //                         #define RDB_P2020       1
+                                 #define MPC_P2020       1
+     //                          #define RDB_P2020       1
 
 
 
@@ -544,16 +544,31 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
 #define CONFIG_SYS_I2C_EEPROM_ADDR_LEN 1
 #define CONFIG_SYS_EEPROM_BUS_NUM	1
 
-/*Конфигурирование RTC */
-#define CONFIG_RTC_DS1337
-    #define CONFIG_SYS_I2C_RTC_ADDR                 0x68
-//  #define CONFIG_SYS_I2C_RTC_ADDR                 0x51 
-#define CONFIG_SYS_RTC_DS1337_NOOSC
 
-/*Для нашей платы  нужен адрес на I2C описании стр 14->|01010001|=0x51*/
-/*#define CONFIG_RTC_PCF8563
-  #define CONFIG_SYS_I2C_RTC_ADDR                0x51
-*/
+#ifdef MPC_P2020
+#define CONFIG_FLASH_OR_PRELIM		0xfff80f37
+#endif
+#ifdef RDB_P2020 
+#define CONFIG_FLASH_OR_PRELIM		0xff000ff7
+#endif
+
+
+
+
+/*Конфигурирование RTC для p2020_RDB kit для этих микросхем адрес I2C одинаковый смотри описание*/
+#ifdef RDB_P2020
+#define CONFIG_RTC_DS1337
+#define CONFIG_SYS_I2C_RTC_ADDR                  0x68
+#define CONFIG_SYS_RTC_DS1337_NOOSC
+#endif
+
+#ifdef MPC_P2020
+#define CONFIG_RTC_DS1388
+#define CONFIG_SYS_I2C_RTC_ADDR                  0x68
+#define CONFIG_SYS_RTC_DS1337_NOOSC
+#endif
+
+
 
 /*
  * General PCI
@@ -968,8 +983,8 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
 #define CONFIG_HDBOOT			\
 	"sf probe 0;"		\
 	"sf read 1000000 150000 350000;"		\
-	"sf read 2000000 500000 600000;"		\
-	"sf read C00000  B00000 10000;"		\
+	"sf read 2000000 500000 800000;"		\
+	"sf read C00000  D00000 10000;"		\
 	"bootm   1000000 2000000 C00000;"	
 	
 #define CONFIG_RAMBOOTCOMMAND		\

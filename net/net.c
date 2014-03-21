@@ -1286,8 +1286,7 @@ static inline IP_t *NetDefragment(IP_t *ip, int *lenp)
 }
 #endif
 
-void
-NetReceive(volatile uchar * inpkt, int len)
+void NetReceive(volatile uchar * inpkt, int len)
 {
 	Ethernet_t *et;
 	IP_t	*ip;

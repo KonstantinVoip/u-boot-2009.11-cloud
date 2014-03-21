@@ -119,7 +119,7 @@ void env_relocate_spec(void)
 {
 	int ret;
 
-	//printf("+env_relocate_spec/spi_flash_probe=%d,%d,%d,%d\n\r",CONFIG_ENV_SPI_BUS,CONFIG_ENV_SPI_CS,CONFIG_ENV_SPI_MAX_HZ,CONFIG_ENV_SPI_MODE);
+    //printf("+env_relocate_spec/spi_flash_probe=%d,%d,%d,%d\n\r",CONFIG_ENV_SPI_BUS,CONFIG_ENV_SPI_CS,CONFIG_ENV_SPI_MAX_HZ,CONFIG_ENV_SPI_MODE);
 	env_flash = spi_flash_probe(CONFIG_ENV_SPI_BUS, CONFIG_ENV_SPI_CS,CONFIG_ENV_SPI_MAX_HZ, CONFIG_ENV_SPI_MODE);
 	if (!env_flash)
 		goto err_probe;

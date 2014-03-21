@@ -134,7 +134,8 @@ static const struct {
  *
  * The return value is the actual bus speed that is set.
  */
-static unsigned int set_i2c_bus_speed(const struct fsl_i2c *dev,unsigned int i2c_clk, unsigned int speed)
+static unsigned int set_i2c_bus_speed(const struct fsl_i2c *dev,
+	unsigned int i2c_clk, unsigned int speed)
 {
 	unsigned short divider = min(i2c_clk / speed, (unsigned short) -1);
 
@@ -144,8 +145,6 @@ static unsigned int set_i2c_bus_speed(const struct fsl_i2c *dev,unsigned int i2c
 	 * want the first divider that is equal to or greater than the
 	 * calculated divider.
 	 */
-	 //puts("+++++++++++++fsl_i2c.c/set_i2c_bus_speed+++++++++++++++++++++++\n\r");
-	 
 #ifdef __PPC__
 	u8 dfsr, fdr = 0x31; /* Default if no FDR found */
 	/* a, b and dfsr matches identifiers A,B and C respectively in AN2919 */
@@ -162,9 +161,7 @@ static unsigned int set_i2c_bus_speed(const struct fsl_i2c *dev,unsigned int i2c
 	fdr = CONFIG_FSL_I2C_CUSTOM_FDR;
 	speed = i2c_clk / divider; /* Fake something */
 #else
-	//debug("Requested speed:%d, i2c_clk:%d\n", speed, i2c_clk);
-	
-	printf("Requested speed:%d, i2c_clk:%d\n", speed, i2c_clk);
+	debug("Requested speed:%d, i2c_clk:%d\n", speed, i2c_clk);
 	if (!dfsr)
 		dfsr = 1;
 
@@ -181,8 +178,9 @@ static unsigned int set_i2c_bus_speed(const struct fsl_i2c *dev,unsigned int i2c
 				bin_ga = (ga & 0x3) | ((ga & 0x4) << 3);
 				fdr = bin_gb | bin_ga;
 				speed = i2c_clk / est_div;
-				//debug("FDR:0x%.2x, div:%ld, ga:0x%x, gb:0x%x, " "a:%d, b:%d, speed:%d\n",fdr, est_div, ga, gb, a, b, speed);
-				printf("FDR:0x%.2x, div:%ld, ga:0x%x, gb:0x%x, " "a:%d, b:%d, speed:%d\n",fdr, est_div, ga, gb, a, b, speed);
+				debug("FDR:0x%.2x, div:%ld, ga:0x%x, gb:0x%x, "
+				      "a:%d, b:%d, speed:%d\n",
+				      fdr, est_div, ga, gb, a, b, speed);
 				/* Condition 2 not accounted for */
 				debug("Tr <= %d ns\n",
 				      (b - 3 * dfsr) * 1000000 /
@@ -194,11 +192,8 @@ static unsigned int set_i2c_bus_speed(const struct fsl_i2c *dev,unsigned int i2c
 		if (a == 24)
 			a += 4;
 	}
-	//debug("divider:%d, est_div:%ld, DFSR:%d\n", divider, est_div, dfsr);
-	//debug("FDR:0x%.2x, speed:%d\n", fdr, speed);
-	  printf("divider:%d, est_div:%ld, DFSR:%d\n", divider, est_div, dfsr);
-	  printf("FDR:0x%.2x, speed:%d\n", fdr, speed);
-	
+	debug("divider:%d, est_div:%ld, DFSR:%d\n", divider, est_div, dfsr);
+	debug("FDR:0x%.2x, speed:%d\n", fdr, speed);
 #endif
 	writeb(dfsr, &dev->dfsrr);	/* set default filter */
 	writeb(fdr, &dev->fdr);		/* set bus speed */
@@ -219,48 +214,127 @@ static unsigned int set_i2c_bus_speed(const struct fsl_i2c *dev,unsigned int i2c
 	return speed;
 }
 
-void i2c_init(int speed, int slaveadd)
+static unsigned int get_i2c_clock(int bus)
 {
-	struct fsl_i2c *dev;
+	if (bus)
+		return gd->i2c2_clk;	/* I2C2 clock */
+	else
+		return gd->i2c1_clk;	/* I2C1 clock */
+}
+
+static int i2c_fixup(const struct fsl_i2c *dev)
+{
+	const unsigned long long timeout = usec2ticks(CONFIG_I2C_MBB_TIMEOUT);
+	unsigned long long timeval = 0;
+	int ret = -1;
+	unsigned int flags = 0;
+#ifdef CONFIG_SYS_FSL_ERRATUM_I2C_A004447
+	unsigned int svr = get_svr();
+
+	if ((SVR_SOC_VER(svr) == SVR_8548 && IS_SVR_REV(svr, 3, 1)) ||
+	    (SVR_SOC_VER(svr) == SVR_P1010 && IS_SVR_REV(svr, 1, 0)) ||
+	    (SVR_SOC_VER(svr) == SVR_P1023 && (svr & 0xff) <= 0x11) ||
+	    (SVR_SOC_VER(svr) == SVR_P3041 && (svr & 0xff) <= 0x20) ||
+	    (SVR_SOC_VER(svr) == SVR_P4080 && (svr & 0xff) <= 0x20) ||
+	    (SVR_SOC_VER(svr) == SVR_P5020 && (svr & 0xff) <= 0x20) ||
+	    (SVR_SOC_VER(svr) == SVR_9131 && (svr & 0xff) <= 0x11))
+		flags = I2C_CR_BIT6;
+#endif
+
+	writeb(I2C_CR_MEN | I2C_CR_MSTA, &dev->cr);
+
+	timeval = get_ticks();
+	while (!(readb(&dev->sr) & I2C_SR_MBB)) {
+		if ((get_ticks() - timeval) > timeout)
+			goto err;
+	}
+
+	if (readb(&dev->sr) & I2C_SR_MAL) {
+		/* SDA is stuck low */
+		writeb(0, &dev->cr);
+		udelay(100);
+		writeb(I2C_CR_MSTA | flags, &dev->cr);
+		writeb(I2C_CR_MEN | I2C_CR_MSTA | flags, &dev->cr);
+	}
+
+	readb(&dev->dr);
+
+	timeval = get_ticks();
+	while (!(readb(&dev->sr) & I2C_SR_MIF)) {
+		if ((get_ticks() - timeval) > timeout)
+			goto err;
+	}
+	ret = 0;
+
+err:
+	writeb(I2C_CR_MEN | flags, &dev->cr);
+	writeb(0, &dev->sr);
+	udelay(100);
+
+	return ret;
+}
+
+void
+i2c_init(int speed, int slaveadd)
+{
+	const unsigned long long timeout = usec2ticks(CONFIG_I2C_MBB_TIMEOUT);
+	unsigned long long timeval;
+	const struct fsl_i2c *dev;
 	unsigned int temp;
-    
-	puts("+++++++++++++++++++++++fsl_i2c.c/i2c_init++++++++++++++++++++++++++\n\r");
+	int bus_num, i;
+
 #ifdef CONFIG_SYS_I2C_INIT_BOARD
-	/* call board specific i2c bus reset routine before accessing the   */
-	/* environment, which might be in a chip on that bus. For details   */
-	/* about this problem see doc/I2C_Edge_Conditions.                  */
+	/* Call board specific i2c bus reset routine before accessing the
+	 * environment, which might be in a chip on that bus. For details
+	 * about this problem see doc/I2C_Edge_Conditions.
+	*/
 	i2c_init_board();
 #endif
-	dev = (struct fsl_i2c *) (CONFIG_SYS_IMMR + CONFIG_SYS_I2C_OFFSET);
+#ifdef CONFIG_SYS_I2C2_OFFSET
+	bus_num = 2;
+#else
+	bus_num = 1;
+#endif
+	for (i = 0; i < bus_num; i++) {
+		dev = i2c_dev[i];
 
-	writeb(0, &dev->cr);			/* stop I2C controller */
-	udelay(5);				/* let it shutdown in peace */
-	temp = set_i2c_bus_speed(dev, gd->i2c1_clk, speed);
-	if (gd->flags & GD_FLG_RELOC)
-		i2c_bus_speed[0] = temp;
-	writeb(slaveadd << 1, &dev->adr);	/* write slave address */
-	writeb(0x0, &dev->sr);			/* clear status register */
-	writeb(I2C_CR_MEN, &dev->cr);		/* start I2C controller */
+		writeb(0, &dev->cr);		/* stop I2C controller */
+		udelay(5);			/* let it shutdown in peace */
+		temp = set_i2c_bus_speed(dev, get_i2c_clock(i), speed);
+		if (gd->flags & GD_FLG_RELOC)
+			i2c_bus_speed[i] = temp;
+		writeb(slaveadd << 1, &dev->adr);/* write slave address */
+		writeb(0x0, &dev->sr);		/* clear status register */
+		writeb(I2C_CR_MEN, &dev->cr);	/* start I2C controller */
 
-#ifdef	CONFIG_SYS_I2C2_OFFSET
-	dev = (struct fsl_i2c *) (CONFIG_SYS_IMMR + CONFIG_SYS_I2C2_OFFSET);
+		timeval = get_ticks();
+		while (readb(&dev->sr) & I2C_SR_MBB) {
+			if ((get_ticks() - timeval) < timeout)
+				continue;
 
-	writeb(0, &dev->cr);			/* stop I2C controller */
-	udelay(5);				/* let it shutdown in peace */
-	temp = set_i2c_bus_speed(dev, gd->i2c2_clk, speed);
-	if (gd->flags & GD_FLG_RELOC)
-		i2c_bus_speed[1] = temp;
-	writeb(slaveadd << 1, &dev->adr);	/* write slave address */
-	writeb(0x0, &dev->sr);			/* clear status register */
-	writeb(I2C_CR_MEN, &dev->cr);		/* start I2C controller */
+			if (i2c_fixup(dev))
+				debug("i2c_init: BUS#%d failed to init\n", i);
+
+			break;
+		}
+	}
+
+#ifdef CONFIG_SYS_I2C_BOARD_LATE_INIT
+	/* Call board specific i2c bus reset routine AFTER the bus has been
+	 * initialized. Use either this callpoint or i2c_init_board;
+	 * which is called before i2c_init operations.
+	 * For details about this problem see doc/I2C_Edge_Conditions.
+	*/
+	i2c_board_late_init();
 #endif
 }
 
-static int i2c_wait4bus(void)
+static int
+i2c_wait4bus(void)
 {
 	unsigned long long timeval = get_ticks();
 	const unsigned long long timeout = usec2ticks(CONFIG_I2C_MBB_TIMEOUT);
-    puts("+++++++++++++fsl_i2c.c/i2c_wait4bus+++++++++++++++++++++++\n\r");
+
 	while (readb(&i2c_dev[i2c_bus_num]->sr) & I2C_SR_MBB) {
 		if ((get_ticks() - timeval) > timeout)
 			return -1;
@@ -269,12 +343,13 @@ static int i2c_wait4bus(void)
 	return 0;
 }
 
-static __inline__ int i2c_wait(int write)
+static __inline__ int
+i2c_wait(int write)
 {
 	u32 csr;
 	unsigned long long timeval = get_ticks();
 	const unsigned long long timeout = usec2ticks(CONFIG_I2C_TIMEOUT);
-    puts("+++++++++++++fsl_i2c.c/__inline__ int i2c_wait+++++++++++++++++++++++\n\r");
+
 	do {
 		csr = readb(&i2c_dev[i2c_bus_num]->sr);
 		if (!(csr & I2C_SR_MIF))
@@ -285,33 +360,29 @@ static __inline__ int i2c_wait(int write)
 		writeb(0x0, &i2c_dev[i2c_bus_num]->sr);
 
 		if (csr & I2C_SR_MAL) {
-			//debug("i2c_wait: MAL\n");
-			//printf("i2c_wait: MAL\n");
-			  //puts("i2c_wait: MAL\n");
+			debug("i2c_wait: MAL\n");
 			return -1;
 		}
 
 		if (!(csr & I2C_SR_MCF))	{
-			//debug("i2c_wait: unfinished\n");
-			//puts("i2c_wait: unfinished\n");
+			debug("i2c_wait: unfinished\n");
 			return -1;
 		}
 
 		if (write == I2C_WRITE_BIT && (csr & I2C_SR_RXAK)) {
-			//debug("i2c_wait: No RXACK\n");
-			puts("i2c_wait: No RXACK\n");
+			debug("i2c_wait: No RXACK\n");
 			return -1;
 		}
 
 		return 0;
 	} while ((get_ticks() - timeval) < timeout);
 
-	//debug("i2c_wait: timed out\n");
-	puts("i2c_wait: timed out\n");
+	debug("i2c_wait: timed out\n");
 	return -1;
 }
 
-static __inline__ int i2c_write_addr (u8 dev, u8 dir, int rsta)
+static __inline__ int
+i2c_write_addr (u8 dev, u8 dir, int rsta)
 {
 	writeb(I2C_CR_MEN | I2C_CR_MSTA | I2C_CR_MTX
 	       | (rsta ? I2C_CR_RSTA : 0),
@@ -325,7 +396,8 @@ static __inline__ int i2c_write_addr (u8 dev, u8 dir, int rsta)
 	return 1;
 }
 
-static __inline__ int __i2c_write(u8 *data, int length)
+static __inline__ int
+__i2c_write(u8 *data, int length)
 {
 	int i;
 
@@ -339,15 +411,14 @@ static __inline__ int __i2c_write(u8 *data, int length)
 	return i;
 }
 
-static __inline__ int __i2c_read(u16 *data, int length)
+static __inline__ int
+__i2c_read(u8 *data, int length)
 {
 	int i;
 
 	writeb(I2C_CR_MEN | I2C_CR_MSTA | ((length == 1) ? I2C_CR_TXAK : 0),
 	       &i2c_dev[i2c_bus_num]->cr);
 
-	readw(&i2c_dev[i2c_bus_num]->dr);	   
-		   
 	/* dummy read */
 	readb(&i2c_dev[i2c_bus_num]->dr);
 
@@ -365,21 +436,22 @@ static __inline__ int __i2c_read(u16 *data, int length)
 			writeb(I2C_CR_MEN | I2C_CR_MSTA | I2C_CR_MTX,
 			       &i2c_dev[i2c_bus_num]->cr);
 
-		//data[i] = readb(&i2c_dev[i2c_bus_num]->dr);
-	      data[i] = readw(&i2c_dev[i2c_bus_num]->dr);
-	
+		data[i] = readb(&i2c_dev[i2c_bus_num]->dr);
 	}
 
 	return i;
 }
 
-int i2c_read(u8 dev, uint addr, int alen, u16 *data, int length)
+int
+i2c_read(u8 dev, uint addr, int alen, u8 *data, int length)
 {
 	int i = -1; /* signal error */
 	u8 *a = (u8*)&addr;
-    //puts("+++++++++++++fsl_i2c.c/i2c_read(+++++++++++++++++++++++\n\r");
-	if (i2c_wait4bus() >= 0
-	    && i2c_write_addr(dev, I2C_WRITE_BIT, 0) != 0
+
+	if (i2c_wait4bus())
+		return -1;
+
+	if (i2c_write_addr(dev, I2C_WRITE_BIT, 0) != 0
 	    && __i2c_write(&a[4 - alen], alen) == alen)
 		i = 0; /* No error so far */
 
@@ -390,8 +462,7 @@ int i2c_read(u8 dev, uint addr, int alen, u16 *data, int length)
 	writeb(I2C_CR_MEN, &i2c_dev[i2c_bus_num]->cr);
 
 	if (i2c_wait4bus()) /* Wait until STOP */
-		//debug("i2c_read: wait4bus timed out\n");
-		//puts("i2c_read: wait4bus timed out\n");
+		debug("i2c_read: wait4bus timed out\n");
 
 	if (i == length)
 	    return 0;
@@ -399,34 +470,37 @@ int i2c_read(u8 dev, uint addr, int alen, u16 *data, int length)
 	return -1;
 }
 
-int i2c_write(u8 dev, uint addr, int alen, u8 *data, int length)
+int
+i2c_write(u8 dev, uint addr, int alen, u8 *data, int length)
 {
 	int i = -1; /* signal error */
 	u8 *a = (u8*)&addr;
-    //puts("+++++++++++++fsl_i2c.c/i2c_write(+++++++++++++++++++++++\n\r");
-	if (i2c_wait4bus() >= 0
-	    && i2c_write_addr(dev, I2C_WRITE_BIT, 0) != 0
+
+	if (i2c_wait4bus())
+		return -1;
+
+	if (i2c_write_addr(dev, I2C_WRITE_BIT, 0) != 0
 	    && __i2c_write(&a[4 - alen], alen) == alen) {
 		i = __i2c_write(data, length);
 	}
 
 	writeb(I2C_CR_MEN, &i2c_dev[i2c_bus_num]->cr);
 	if (i2c_wait4bus()) /* Wait until STOP */
-		//debug("i2c_write: wait4bus timed out\n");
-        //puts("i2c_write: wait4bus timed out\n"); 
+		debug("i2c_write: wait4bus timed out\n");
+
 	if (i == length)
 	    return 0;
 
 	return -1;
 }
 
-int i2c_probe(uchar chip)
+int
+i2c_probe(uchar chip)
 {
 	/* For unknow reason the controller will ACK when
 	 * probing for a slave with the same address, so skip
 	 * it.
 	 */
-	 //puts("+++++++++++++fsl_i2c.c/i2c_probe+++++++++++++++++++++++\n\r");
 	if (chip == (readb(&i2c_dev[i2c_bus_num]->adr) >> 1))
 		return -1;
 
@@ -440,7 +514,7 @@ int i2c_set_bus_num(unsigned int bus)
 		i2c_bus_num = bus;
 	} else {
 		int	ret;
-         //puts("+++++++++++++fsl_i2c.c/i2c_set_bus_num+++++++++++++++++++++++\n\r");
+
 		ret = i2x_mux_select_mux(bus);
 		if (ret)
 			return ret;
@@ -464,7 +538,7 @@ int i2c_set_bus_num(unsigned int bus)
 int i2c_set_bus_speed(unsigned int speed)
 {
 	unsigned int i2c_clk = (i2c_bus_num == 1) ? gd->i2c2_clk : gd->i2c1_clk;
-    //puts("+++++++++++++fsl_i2c.c/i2c_set_bus_speed+++++++++++++++++++++++\n\r");
+
 	writeb(0, &i2c_dev[i2c_bus_num]->cr);		/* stop controller */
 	i2c_bus_speed[i2c_bus_num] =
 		set_i2c_bus_speed(i2c_dev[i2c_bus_num], i2c_clk, speed);

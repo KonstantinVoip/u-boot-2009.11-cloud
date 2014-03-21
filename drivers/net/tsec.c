@@ -167,7 +167,7 @@ int tsec_initialize(bd_t * bis, struct tsec_info_struct *tsec_info)
 
 	
     //printf("!!!!!!!!!!!!!!! promisc_enable_168!!!!!!!!!!!!!!!!!\n");
-	//priv->regs->rctrl=0x00000008; 
+	priv->regs->rctrl=0x00000008; 
 	
 	
 	
@@ -193,7 +193,7 @@ int tsec_init(struct eth_device *dev, bd_t * bd)
 	struct tsec_private *priv = (struct tsec_private *)dev->priv;
 	volatile tsec_t *regs = priv->regs;  
 
-	//printf("?++tsec_init++?\n\r");
+	printf("?++++tsec_init++++?\n\r");
 	
 	/* Make sure the controller is stopped */
 	tsec_halt(dev);
@@ -316,6 +316,9 @@ static void tsec_configure_serdes(struct tsec_private *priv)
  */
 static int init_phy(struct eth_device *dev)
 {
+	
+	bd_t * bd =0;
+	int return_tsec_init=0;
 	struct tsec_private *priv = (struct tsec_private *)dev->priv;
 	struct phy_info *curphy;
 	volatile tsec_mdio_t *phyregs = priv->phyregs;
@@ -345,9 +348,29 @@ static int init_phy(struct eth_device *dev)
 		tsec_configure_serdes(priv);
 
 	priv->phyinfo = curphy;
-
 	phy_run_commands(priv, priv->phyinfo->config);
 
+	
+	//мои доработки Kosta _add _dorabotki
+	/*Попробуем сюда пропихнуть tsec_initialize+приём пакета*/
+	return_tsec_init=tsec_init(dev,bd);
+	if(return_tsec_init<0)
+	{
+	 tsec_halt(dev);  //Stop tsec! if no Link fo external Device PHY. 
+	 printf("STOP TSEC DEVICE\n\r");
+	}
+	else
+	{
+	 tsec_recv(dev);
+	}
+	
+
+	
+	
+	
+	
+	
+	
 	return 1;
 }
 
@@ -373,7 +396,7 @@ uint mii_parse_sr(uint mii_reg, struct tsec_private * priv)
 	 * (ie - we're capable and it's not done)
 	 */
 	mii_reg = read_phy_reg(priv, MIIM_STATUS);
-	printf("++++++++++++++++++++++6mii_parse_sr\n");
+	printf("++++++++6mii_parse_sr++++++\n");
 	if ((mii_reg & PHY_BMSR_AUTN_ABLE) && !(mii_reg & PHY_BMSR_AUTN_COMP)) {
 		int i = 0;   
 		puts("Waiting for PHY auto negotiation to complete");
@@ -785,7 +808,6 @@ static void init_registers(volatile tsec_t * regs)
 {
 	/* Clear IEVENT */
 	regs->ievent = IEVENT_INIT_CLEAR;
-
 	regs->imask = IMASK_INIT_CLEAR;
 
 	regs->hash.iaddr0 = 0;
@@ -809,8 +831,7 @@ static void init_registers(volatile tsec_t * regs)
 	
 	
 	//
-	//regs->rctrl = 0x00000000;
-    printf("!!!!!!!!!!!!!!! promisc_enable!!!!!!!!!!!!!!!!!\n");
+    printf("++init_registers/promisc_enable++\n");
 	regs->rctrl=0x00000008; 
 	
 	
@@ -836,7 +857,7 @@ static void adjust_link(struct eth_device *dev)
 {
 	struct tsec_private *priv = (struct tsec_private *)dev->priv;
 	volatile tsec_t *regs = priv->regs;
-    //printf("+++++++++++++++++7adjust_link\n");
+    printf("+++++7adjust_link++++\n");
 	if (priv->link) {
 		if (priv->duplexity != 0)
 			regs->maccfg2 |= MACCFG2_FULL_DUPLEX;
@@ -929,81 +950,154 @@ static int tsec_send(struct eth_device *dev, volatile void *packet, int length)
 {
 	int i;
 	int result = 0;
+	static int count_tsecsend =0;
 	struct tsec_private *priv = (struct tsec_private *)dev->priv;
 	volatile tsec_t *regs = priv->regs;
 
-	/* Find an empty buffer descriptor */
-	for (i = 0; rtx.txbd[txIdx].status & TXBD_READY; i++) {
-		if (i >= TOUT_LOOP) {
-			debug("%s: tsec: tx buffers full\n", dev->name);
+	// Find an empty buffer descriptor
+	for (i = 0; rtx.txbd[txIdx].status & TXBD_READY; i++) 
+	{
+		if (i >= TOUT_LOOP) 
+		{
+			//debug("%s: tsec: tx buffers full\n", dev->name);
+			printf("%s: tsec: tx buffers full\n", dev->name);
 			return result;
 		}
 	}
 
-	
-	
-	
+
 	rtx.txbd[txIdx].bufPtr = (uint) packet;
 	rtx.txbd[txIdx].length = length;
 	rtx.txbd[txIdx].status |=(TXBD_READY | TXBD_LAST | TXBD_CRC | TXBD_INTERRUPT);
-
 	
 	//printf("+tsec_send_len=%d+\n\r",length);
 	
-	/* Tell the DMA to go */
+	// Tell the DMA to go
 	regs->tstat = TSTAT_CLEAR_THALT;
 
-	/* Wait for buffer to be transmitted */
-	for (i = 0; rtx.txbd[txIdx].status & TXBD_READY; i++) {
-		if (i >= TOUT_LOOP) {
-			debug("%s: tsec: tx error\n", dev->name);
+	// Wait for buffer to be transmitted
+	for (i = 0; rtx.txbd[txIdx].status & TXBD_READY; i++) 
+	{
+		if (i >= TOUT_LOOP)
+		{
+			//debug("%s: tsec: tx error\n", dev->name);
+			printf("%s: tsec: tx error\n", dev->name);
+			
 			return result;
 		}
 	}
 
 	txIdx = (txIdx + 1) % TX_BUF_CNT;
 	result = rtx.txbd[txIdx].status & TXBD_STATS;
-
+    //printf("+tsec_send__==%d+\n\r",count_tsecsend);
+	count_tsecsend++;
 	return result;
 }
 
 static int tsec_recv(struct eth_device *dev)
 {
 	int length;
+	int len;
+	int i=0;
 	struct tsec_private *priv = (struct tsec_private *)dev->priv;
 	volatile tsec_t *regs = priv->regs;
-
-	while (!(rtx.rxbd[rxIdx].status & RXBD_EMPTY)) 
+    static int count =0;
+	static int kys_packet_recieve_ok=0;
+	
+	//Описание заголовков пакетов разных
+	uchar * input_packet;
+	Ethernet_t *et;
+	IP_t	*ip;
+	IPaddr_t tmp;
+	
+ 	
+ 
+ 
+if(kys_packet_recieve_ok==0)
+{    
+    //Пришёл пакет от KY-S всё ok
+	 //end if packet from ky-s ok recieve
+    //Не пришёл пакет от KY-S ждём или работаем дальше что нужно сделать
+	printf("++++++Start WHILE CYCLE for KYS PACKET+++++\n\r");
+	
+	for(i=0;i<4000000;i++) 
 	{
+			while (!(rtx.rxbd[rxIdx].status & RXBD_EMPTY)) 
+			{
+			length = rtx.rxbd[rxIdx].length;
+			    
+				// Send up to stack the packet up if there were no errors
+				if (!(rtx.rxbd[rxIdx].status & RXBD_STATS)) 
+				{
+                  //Если пришёл пакет от KY-S вылазем из цикла пока по первости по размеру пакета.
+					if(length-4==128) 
+					{
+					printf("tsec_recv_KY-S_packet=%d,len =%d\n\r",count,length - 4);
+					len=length - 4;
+					input_packet=NetRxPackets[rxIdx];
+					
+					//Ethernet заголовок выделяем определяем MAC адрес
+					et = (Ethernet_t *)input_packet;
+					//IP заголовок выделяем
+					ip = (IP_t *)(input_packet + ETHER_HDR_SIZE);
+		            len -= ETHER_HDR_SIZE;
+					
+					//tmp = NetReadIP(&ip->ip_dst);
+					//printf("IP_DST=0x%x\n\r",tmp);
+					
+					tmp = NetReadIP(&ip->ip_src);
+				    printf("IP_SRC=0x%x\n\r",tmp);
+					
+					/*Теперь нужно получить IP адрес отправителя KY-S и MAC адрес*/
+					
+					
+					
+					kys_packet_recieve_ok=1;
+					return -1;
+				   }				 	  
+				
+				}
+				
+				else{printf("Got error %x\n",(rtx.rxbd[rxIdx].status & RXBD_STATS));}
+				rtx.rxbd[rxIdx].length = 0;
+				//Set the wrap bit if this is the last element in the list
+				rtx.rxbd[rxIdx].status = RXBD_EMPTY | (((rxIdx + 1) == PKTBUFSRX) ? RXBD_WRAP : 0);
+				rxIdx = (rxIdx + 1) % PKTBUFSRX;
+			    count++;
+			}
 
-		length = rtx.rxbd[rxIdx].length;
+		   if (regs->ievent & IEVENT_BSY)
+		   {regs->ievent = IEVENT_BSY;regs->rstat = RSTAT_CLEAR_RHALT;}
+			 
+    } //End global for cycle 
+	kys_packet_recieve_ok=1;
+	printf("------END WAIT KYS_PACKET LOOP CYCLE------\n\r");
+ }//End If	
+ else //Normal operation's
+ {
+    		while (!(rtx.rxbd[rxIdx].status & RXBD_EMPTY)) 
+			{
+			length = rtx.rxbd[rxIdx].length;
+			// Send up to stack the packet up if there were no errors
+			if (!(rtx.rxbd[rxIdx].status & RXBD_STATS)) 
+			{
+  			    NetReceive(NetRxPackets[rxIdx], length - 4); 
+			}
+			else{printf("Got error %x\n",(rtx.rxbd[rxIdx].status & RXBD_STATS));}
+            
+			rtx.rxbd[rxIdx].length = 0;
+		    //Set the wrap bit if this is the last element in the list
+			rtx.rxbd[rxIdx].status = RXBD_EMPTY | (((rxIdx + 1) == PKTBUFSRX) ? RXBD_WRAP : 0);
+			rxIdx = (rxIdx + 1) % PKTBUFSRX;
+			}
 
-		/* Send the packet up if there were no errors */
-		if (!(rtx.rxbd[rxIdx].status & RXBD_STATS)) 
-		{
-			NetReceive(NetRxPackets[rxIdx], length - 4);
-		}
-		else
-		{
-			printf("Got error %x\n",(rtx.rxbd[rxIdx].status & RXBD_STATS));
-		}
-
-		rtx.rxbd[rxIdx].length = 0;
-
-		/* Set the wrap bit if this is the last element in the list */
-		rtx.rxbd[rxIdx].status = RXBD_EMPTY | (((rxIdx + 1) == PKTBUFSRX) ? RXBD_WRAP : 0);
-
-		rxIdx = (rxIdx + 1) % PKTBUFSRX;
-	}
-
-	if (regs->ievent & IEVENT_BSY)
-	{
-		regs->ievent = IEVENT_BSY;
-		regs->rstat = RSTAT_CLEAR_RHALT;
-	}
-
-	return -1;
-
+		   if (regs->ievent & IEVENT_BSY)
+		   {regs->ievent = IEVENT_BSY;regs->rstat = RSTAT_CLEAR_RHALT;}
+ 
+ }
+			
+ 
+return -1;
 }
 
 /* Stop the interface */

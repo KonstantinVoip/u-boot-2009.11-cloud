@@ -166,8 +166,7 @@ static int spansion_wait_ready(struct spi_flash *flash, unsigned long timeout)
 	return -1;
 }
 
-static int spansion_read_fast(struct spi_flash *flash,
-			     u32 offset, size_t len, void *buf)
+static int spansion_read_fast(struct spi_flash *flash,u32 offset, size_t len, void *buf)
 {
 	struct spansion_spi_flash *spsn = to_spansion_spi_flash(flash);
 	unsigned long page_addr;
@@ -190,8 +189,7 @@ static int spansion_read_fast(struct spi_flash *flash,
 	return spi_flash_read_common(flash, cmd, sizeof(cmd), buf, len);
 }
 
-static int spansion_read_fast_chunks(struct spi_flash *flash,
-			     u32 offset, size_t data_len, void *buf)
+static int spansion_read_fast_chunks(struct spi_flash *flash,u32 offset, size_t data_len, void *buf)
 {
 	struct spansion_spi_flash *spsn = to_spansion_spi_flash(flash);
 	unsigned long page_addr;
@@ -231,8 +229,7 @@ static int spansion_read_fast_chunks(struct spi_flash *flash,
 	return ret;
 }
 
-static int spansion_write(struct spi_flash *flash,
-			 u32 offset, size_t len, const void *buf)
+static int spansion_write(struct spi_flash *flash,u32 offset, size_t len, const void *buf)
 {
 	struct spansion_spi_flash *spsn = to_spansion_spi_flash(flash);
 	unsigned long page_addr;
@@ -401,8 +398,7 @@ struct spi_flash *spi_flash_probe_spansion(struct spi_slave *spi, u8 *idcode)
 	spsn->flash.size = params->page_size * params->pages_per_sector
 	    * params->nr_sectors;
 
-	printf("SF: Detected %s with page size %u, total %u bytes\n",
-	      params->name, params->page_size, spsn->flash.size);
+	printf("SF: Detected %s with page size %u, total %u bytes\n",params->name, params->page_size, spsn->flash.size);
 
 	return &spsn->flash;
 }
