@@ -171,6 +171,13 @@ IPaddr_t	NetPingIP;		/* the ip address to ping		*/
 static void PingStart(void);
 #endif
 
+//Zoya
+#if defined(CONFIG_KYS_TRAP)
+static void KysTrapStart();
+#endif
+//Zoya
+
+
 #if defined(CONFIG_CMD_CDP)
 static void CDPStart(void);
 #endif
@@ -322,7 +329,7 @@ int NetLoop(proto_t protocol)
 	NetTxPacket = NULL;
 	NetTryCount = 1;
 
-	if (!NetTxPacket) {
+	if (!NetTxPacket)	{
 		int	i;
 		/*
 		 *	Setup packet buffers, aligned correctly.
@@ -342,7 +349,8 @@ int NetLoop(proto_t protocol)
 
 	eth_halt();
 #ifdef CONFIG_NET_MULTI
-	eth_set_current();
+   //Zoya eth_set_current();
+	eth_set_current(0);
 #endif
 	if (eth_init(bd) < 0) {
 		eth_halt();
@@ -436,6 +444,15 @@ restart:
 			DnsStart();
 			break;
 #endif
+
+//Zoya
+#if defined(CONFIG_KYS_TRAP)
+      case KYS_TRAP:
+         KysTrapStart();
+         break;
+#endif
+//Zoya
+
 		default:
 			break;
 		}
@@ -683,9 +700,73 @@ int NetSendUDPPacket(uchar *ether, IPaddr_t dest, int dport, int sport, int len)
 	return 0;	/* transmitted */
 }
 
+//Zoya
+////////////////////////////////////////////////////////////////////////
+#if defined(CONFIG_KYS_TRAP)
+static void KysTrapTimeout (void)
+{
+   eth_halt();
+   NetState = NETLOOP_FAIL;   /* we did not get the reply */
+}
+//----------------------------------------------------------------
+static void KysTrapHandler (unsigned src)
+{
+   char s[15], x;
+   /*
+    #ifdef DEBUGNET
+    printf("%s %x", __FUNCTION__,  src);
+    #endif
+    */
+   /*
+    ip_src= c0a978ab 192.169.120.171
+    PACKET 61
+    01 FF FF FF FF 00
+    00 50 C2 24 88 1D
+    08 00
+    45 00 00 2F 00 00 00 00 80
+    proto = 11
+    crc = C8 14
+    C0 A9 78 AB
+    C0 A9 78 AB
+    udp
+    srp_port = 00 00
+    dst-port = 00 00
+    len = 00 1B
+    95 7C 00 50 C2 24 88 1D
+    snmptrap failed
+    */
+
+   sprintf(s, "%d.%d.%d.%d", (src >> 24) & 0xFF, (src >> 16) & 0xFF, (src >> 8) & 0xFF, src & 0xFF);
+   /*
+    #ifdef DEBUGNET
+    printf("kysipaddr=%s\r\n", s);
+    #endif
+    */
+   setenv("kysipaddr", s);
+   k__flash_write16((src & 0xFFFF), k_word_flash_map(PLIS_KYS_IP_OFFSET));
+   k__flash_write16((src >>16),     k_word_flash_map(PLIS_KYS_IP_OFFSET + 2));
+
+  NetState = NETLOOP_SUCCESS;
+
+}
+
+//-----------------------------------------------------------------
+static void KysTrapStart(void)
+{
+#if defined(CONFIG_NET_MULTI)
+   printf ("kys trap using %s device\n", eth_get_name());
+#endif   /* CONFIG_NET_MULTI */
+   NetSetTimeout (10000UL, KysTrapTimeout);
+ //  NetSetHandler (KysTrapHandler);
+   return 1;
+}
+
+#endif
+////////////////////////////////////////////////////////////////////////
+//Zoya
+
 #if defined(CONFIG_CMD_PING)
 static ushort PingSeqNo;
-
 int PingSend(void)
 {
 	static uchar mac[6];
@@ -760,7 +841,7 @@ static void PingHandler (uchar * pkt, unsigned dest, unsigned src, unsigned len)
 static void PingStart(void)
 {
 #if defined(CONFIG_NET_MULTI)
-	printf ("Using %s device\n", eth_get_name());
+	printf ("Ping Using %s device\n", eth_get_name());
 #endif	/* CONFIG_NET_MULTI */
 	NetSetTimeout (10000UL, PingTimeout);
 	NetSetHandler (PingHandler);
@@ -1286,12 +1367,13 @@ static inline IP_t *NetDefragment(IP_t *ip, int *lenp)
 }
 #endif
 
-void NetReceive(volatile uchar * inpkt, int len)
+void
+NetReceive(volatile uchar * inpkt, int len)
 {
 	Ethernet_t *et;
 	IP_t	*ip;
 	ARP_t	*arp;
-	IPaddr_t tmp;
+	IPaddr_t ipaddr;
 	int	x;
 	uchar *pkt;
 #if defined(CONFIG_CMD_CDP)
@@ -1305,10 +1387,10 @@ void NetReceive(volatile uchar * inpkt, int len)
 	NetRxPacketLen = len;
 	et = (Ethernet_t *)inpkt;
 
+
 	
 	
-	
-	
+
 	//printf("NET_rx_len=%d\n\r",NetRxPacketLen);
 	//printf("et->et_dest[6]=%x\n\r",et->et_dest);
 	
@@ -1466,10 +1548,10 @@ void NetReceive(volatile uchar * inpkt, int len)
 			debug("Got ARP REPLY, set server/gtwy eth addr (%pM)\n",
 				arp->ar_data);
 
-			tmp = NetReadIP(&arp->ar_data[6]);
+			ipaddr = NetReadIP(&arp->ar_data[6]);
 
 			/* matched waiting packet's address */
-			if (tmp == NetArpWaitReplyIP) {
+			if (ipaddr == NetArpWaitReplyIP) {
 				debug("Got it\n");
 				/* save address for later use */
 				memcpy(NetArpWaitPacketMAC, &arp->ar_data[0], 6);
@@ -1547,10 +1629,13 @@ void NetReceive(volatile uchar * inpkt, int len)
 			return;
 		}
 		/* If it is not for us, ignore it */
-		tmp = NetReadIP(&ip->ip_dst);
-		if (NetOurIP && tmp != NetOurIP && tmp != 0xFFFFFFFF) {
+		ipaddr = NetReadIP(&ip->ip_dst);
+		if (NetOurIP && ipaddr != NetOurIP && ipaddr != 0xFFFFFFFF
+		      && memcmp(eth_get_name(), ETH_KYS, strlen(ETH_KYS))//Zoya  not waiting kys boot packet
+		    )
+		{
 #ifdef CONFIG_MCAST_TFTP
-			if (Mcast_addr != tmp)
+			if (Mcast_addr != ipaddr)
 #endif
 			return;
 		}
@@ -1619,10 +1704,11 @@ void NetReceive(volatile uchar * inpkt, int len)
 			default:
 				return;
 			}
-		} else if (ip->ip_p != IPPROTO_UDP) {	/* Only UDP packets */
-			return;
-		}
+      } else if (ip->ip_p != IPPROTO_UDP) {  /* Only UDP packets */
+         return;
+      }
 
+		//UDP
 #ifdef CONFIG_UDP_CHECKSUM
 		if (ip->udp_xsum != 0)
 		{
@@ -1672,6 +1758,17 @@ void NetReceive(volatile uchar * inpkt, int len)
 						ntohs(ip->udp_src),
 						ntohs(ip->udp_len) - 8);
 #endif
+
+		//Zoya  receiving kys boot packet
+      if(!memcmp(eth_get_name(), ETH_KYS, strlen(ETH_KYS)))
+      {
+         printf("!!!kys!!!\r\n");
+         KysTrapHandler(ip->ip_src);
+      }
+      else
+      {
+      //Zoya
+
 		/*
 		 *	IP header OK.  Pass the packet to the current handler.
 		 */
@@ -1679,6 +1776,7 @@ void NetReceive(volatile uchar * inpkt, int len)
 						ntohs(ip->udp_dst),
 						ntohs(ip->udp_src),
 						ntohs(ip->udp_len) - 8);
+      }
 		break;
 	}
 }

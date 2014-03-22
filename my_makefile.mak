@@ -53,7 +53,7 @@ UNDEF_SYM = -u__u_boot_cmd_base -u__u_boot_cmd_bdinfo -u__u_boot_cmd_boot -u__u_
 -u__u_boot_cmd_mii -u__u_boot_cmd_mm -u__u_boot_cmd_mw  -u__u_boot_cmd_nand -u__u_boot_cmd_nboot -u__u_boot_cmd_nfs                    \
 -u__u_boot_cmd_nm -u__u_boot_cmd_ping -u__u_boot_cmd_printenv -u__u_boot_cmd_protect -u__u_boot_cmd_reset -u__u_boot_cmd_run          \
 -u__u_boot_cmd_saveenv -u__u_boot_cmd_setenv -u__u_boot_cmd_setexpr -u__u_boot_cmd_sf  -u__u_boot_cmd_showvar  -u__u_boot_cmd_sleep   \
--u__u_boot_cmd_source  -u__u_boot_cmd_start -u__u_boot_cmd_test  -u__u_boot_cmd_tftpboot  -u__u_boot_cmd_version           
+-u__u_boot_cmd_source  -u__u_boot_cmd_start -u__u_boot_cmd_test  -u__u_boot_cmd_tftpboot  -u__u_boot_cmd_version  -u__u_boot_cmd_date         
                          
 
 

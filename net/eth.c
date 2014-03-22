@@ -90,6 +90,9 @@ static unsigned int eth_rcv_current = 0, eth_rcv_last = 0;
 #endif
 
 static struct eth_device *eth_devices, *eth_current;
+//Zoya
+static struct eth_device *eth_current_old;
+//Zoya
 
 struct eth_device *eth_get_dev(void)
 {
@@ -159,26 +162,36 @@ int eth_get_dev_index (void)
 
 	return (0);
 }
+//Zoya
+#ifdef CONFIG_NET_MULTI
+ char *eth_act = "ethact";
+#endif
+ //Zoya
 
 int eth_register(struct eth_device* dev)
 {
 	struct eth_device *d;
+/*Zoya
+#ifdef DEBUGNET
+    printf("%s %s\r\n", __FUNCTION__, dev->name);
+#endif
+*/
 
 	if (!eth_devices) {
 		eth_current = eth_devices = dev;
 #ifdef CONFIG_NET_MULTI
 		/* update current ethernet name */
 		{
-			char *act = getenv("ethact");
-			if (act == NULL || strcmp(act, eth_current->name) != 0)
-				setenv("ethact", eth_current->name);
+         char *act = getenv(eth_act /*Zoya "ethact" */);
+         if (act == NULL || strcmp(act, eth_current->name) != 0)
+            setenv(eth_act /*Zoya "ethact" */, eth_current->name);
 		}
 #endif
 	} else {
 		for (d=eth_devices; d->next!=eth_devices; d=d->next);
 		d->next = dev;
 	}
-    printf("+++++3eth_register+++++\n\r");
+   printf("+++++3eth_register+++++\n\r");
 	dev->state = ETH_STATE_INIT;
 	dev->next  = eth_devices;
 
@@ -192,6 +205,10 @@ int eth_initialize(bd_t *bis)
 
 	eth_devices = NULL;
 	eth_current = NULL;
+	//Zoya
+   eth_current_old = NULL;
+   //Zoya
+
 
 	show_boot_progress (64);
 #if defined(CONFIG_MII) || defined(CONFIG_CMD_MII)
@@ -250,14 +267,27 @@ int eth_initialize(bd_t *bis)
 
 #ifdef CONFIG_NET_MULTI
 		/* update current ethernet name */
-		if (eth_current) {
-			char *act = getenv("ethact");
-			if (act == NULL || strcmp(act, eth_current->name) != 0)
-				setenv("ethact", eth_current->name);
-		} else
-			setenv("ethact", NULL);
-#endif
 
+      if (eth_current) {
+         char *act = getenv(eth_act /*Zoya "ethact" */);
+         if (act == NULL || strcmp(act, eth_current->name) != 0)
+            setenv(eth_act /*Zoya "ethact" */, eth_current->name);
+      } else
+         setenv(eth_act /*Zoya "ethact" */, NULL);
+
+		//Zoya change eth_current from eTSEC1 to ETH_KYS(eTSEC2) and waiting kys boot packet
+#ifdef CONFIG_KYS_TRAP
+		eth_current_old = eth_current;
+		eth_current = eth_get_dev_by_name(ETH_KYS);
+		setenv(eth_act, eth_current->name);
+	   if (NetLoop(KYS_TRAP) < 0)
+	   {
+	      printf("kys trap failed\n");
+	   }
+#endif //CONFIG_KYS_TRAP
+      //Zoya
+
+#endif //CONFIG_NET_MULTI
 		putc ('\n');
 	}
 
@@ -448,9 +478,9 @@ void eth_try_another(int first_restart)
 #ifdef CONFIG_NET_MULTI
 	/* update current ethernet name */
 	{
-		char *act = getenv("ethact");
-		if (act == NULL || strcmp(act, eth_current->name) != 0)
-			setenv("ethact", eth_current->name);
+      char *act = getenv(eth_act /*Zoya "ethact" */);
+      if (act == NULL || strcmp(act, eth_current->name) != 0)
+         setenv(eth_act /*Zoya "ethact" */, eth_current->name);
 	}
 #endif
 
@@ -460,19 +490,35 @@ void eth_try_another(int first_restart)
 }
 
 #ifdef CONFIG_NET_MULTI
-void eth_set_current(void)
+void eth_set_current(int restore /*Zoya void*/)
 {
 	static char *act = NULL;
 	static int  env_changed_id = 0;
 	struct eth_device* old_current;
 	int	env_id;
 
-	if (!eth_current)	/* XXX no current */
-		return;
+   if (!eth_current) /* XXX no current */
+      return;
+
+//Zoya
+#if defined(CONFIG_KYS_TRAP)
+   if(eth_current_old)//eth_current was changed from eTSEC1( == eth_current_old) to eTSEC2(ETH_KYS)
+   {
+      if(restore)//restore
+      {
+         eth_current = eth_current_old;
+         eth_current_old = NULL;
+         setenv(eth_act, eth_current->name);
+      }
+      return;
+   }
+#endif //CONFIG_KYS_TRAP
+//Zoya
+
 
 	env_id = get_env_id();
 	if ((act == NULL) || (env_changed_id != env_id)) {
-		act = getenv("ethact");
+		act = getenv(eth_act /*Zoya "ethact" */);
 		env_changed_id = env_id;
 	}
 	if (act != NULL) {
@@ -483,8 +529,13 @@ void eth_set_current(void)
 			eth_current = eth_current->next;
 		} while (old_current != eth_current);
 	}
+	setenv(eth_act /*Zoya "ethact" */, eth_current->name);
 
-	setenv("ethact", eth_current->name);
+/*Zoya
+#ifdef DEBUGNET
+      printf("%s %s \r\n",__FUNCTION__, eth_current->name);
+#endif
+*/
 }
 #endif
 

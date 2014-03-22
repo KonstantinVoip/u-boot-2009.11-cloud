@@ -40,6 +40,10 @@
 
 #include <post.h>
 
+//Zoya
+#include <net.h>
+//Zoya
+
 #if defined(CONFIG_SILENT_CONSOLE) || defined(CONFIG_POST) || defined(CONFIG_CMDLINE_EDITING)
 DECLARE_GLOBAL_DATA_PTR;
 #endif
@@ -264,6 +268,12 @@ static __inline__ int abortboot(int bootdelay)
 		gd->flags &= ~GD_FLG_SILENT;
 #endif
 
+//Zoya
+#ifdef CONFIG_KYS_TRAP
+   eth_set_current(1);
+#endif
+//Zoya
+
 	return abort;
 }
 # endif	/* CONFIG_AUTOBOOT_KEYED */
@@ -397,7 +407,7 @@ void main_loop (void)
 
 	debug ("### main_loop: bootcmd=\"%s\"\n", s ? s : "<UNDEFINED>");
 
-	if (bootdelay >= 0 && s && !abortboot (bootdelay)) {
+	if (bootdelay >= 0 && s && !abortboot (bootdelay))	{
 # ifdef CONFIG_AUTOBOOT_KEYED
 		int prev = disable_ctrlc(1);	/* disable Control C checking */
 # endif

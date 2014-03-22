@@ -2,6 +2,11 @@
 #define __eLBCTRANSMITBUF_H
 ////Testing Buffer to Transmit Data  ->Cyclone3 PLIS
 
+//Zoya  uboot/common/cmd_nand.c
+u16 k__flash_read16(void *addr);
+void k__flash_write16(u16 value, void *addr);
+void * k_word_flash_map (u16 offset);
+//Zoya
 
 void  write_to_PLIS(u16 *in_packet_data,u16 in_packet_data_length);
 void  write_to_PLIS2(u16 *in_packet2_data,u16 in_packet_data_length2);

@@ -116,7 +116,7 @@ extern int eth_initialize(bd_t *bis);	/* Initialize network subsystem */
 extern int eth_register(struct eth_device* dev);/* Register network device */
 extern void eth_try_another(int first_restart);	/* Change the device */
 #ifdef CONFIG_NET_MULTI
-extern void eth_set_current(void);		/* set nterface to ethcur var */
+extern void eth_set_current(int restore /*Zoya void*/);     /* set nterface to ethcur var */
 #endif
 extern struct eth_device *eth_get_dev(void);	/* get the current device MAC */
 extern struct eth_device *eth_get_dev_by_name(char *devname); /* get device */
@@ -359,8 +359,8 @@ extern int		NetState;		/* Network loop state		*/
 #ifdef CONFIG_NET_MULTI
 extern int		NetRestartWrap;		/* Tried all network devices	*/
 #endif
-
-typedef enum { BOOTP, RARP, ARP, TFTP, DHCP, PING, DNS, NFS, CDP, NETCONS, SNTP } proto_t;
+//Zoya typedef enum { BOOTP, RARP, ARP, TFTP, DHCP, PING, DNS, NFS, CDP, NETCONS, SNTP } proto_t;
+typedef enum { BOOTP, RARP, ARP, TFTP, DHCP, PING, DNS, NFS, CDP, NETCONS, SNTP, KYS_TRAP } proto_t;
 
 /* from net/net.c */
 extern char	BootFile[128];			/* Boot File name		*/

@@ -54,34 +54,37 @@ void assmble_packet(u16 length);
 void write_toPLIS_success();
 
 ////////IO_READ_WRITE_FUNCTION's
-static inline void * k_word_flash_map (u16 offset)
+/*Zoya static inline */void * k_word_flash_map (u16 offset)
 {
   unsigned int byte_offset = offset * 2;
   //puts("++++++++cfi_flash.c/flash_map+++++++\n\r");
 	
   //return (void *)(0xff000000 + byte_offset);
-    return (void *)(0xef000000 + byte_offset);     
+    return (void *)(PLIS_PHYSICAL_RESOURCE_START/*Zoya 0xef000000 */ + byte_offset);
 }
 
 
- 
-static inline u16 k__flash_read16(void *addr)
+
+/*Zoya static inline */ u16 k__flash_read16(void *addr)
 {
 	return __raw_readw(addr);
 }
 
 
-static inline void k__flash_write16(u16 value, void *addr)
+/*Zoya static inline */void k__flash_write16(u16 value, void *addr)
 {
 	__raw_writew(value, addr);
 }
 
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 void write_toPLIS_success()
 {
 u16 l_adress_write_success=30;
 u16 data_write_success=0x0003;	
+
+
      *(volatile unsigned short *)PCI_FIX_ADDR((void *)(0xef00003c)) = 0x0003; 
    //*(volatile unsigned short *)PCI_FIX_ADDR((void *)(0xff00003c)) = 0x0003;
    //printf("Write_sucess Num=%d Waddress=0x%x -> Wdata= 0x%x|\n\r",l_adress_write_success,flash_map(l_adress_write_success),/*data_to_write*/ /*test_mas[m]*/data_write_success);	
@@ -89,7 +92,7 @@ u16 data_write_success=0x0003;
 }
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////
 void write_to_PLIS(u16 *inpacket_data,u16 data_legth)
 {
 //Conunters
