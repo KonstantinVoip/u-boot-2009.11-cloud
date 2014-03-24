@@ -711,43 +711,11 @@ static void KysTrapTimeout (void)
 //----------------------------------------------------------------
 static void KysTrapHandler (unsigned src)
 {
-   char s[15], x;
-   /*
-    #ifdef DEBUGNET
-    printf("%s %x", __FUNCTION__,  src);
-    #endif
-    */
-   /*
-    ip_src= c0a978ab 192.169.120.171
-    PACKET 61
-    01 FF FF FF FF 00
-    00 50 C2 24 88 1D
-    08 00
-    45 00 00 2F 00 00 00 00 80
-    proto = 11
-    crc = C8 14
-    C0 A9 78 AB
-    C0 A9 78 AB
-    udp
-    srp_port = 00 00
-    dst-port = 00 00
-    len = 00 1B
-    95 7C 00 50 C2 24 88 1D
-    snmptrap failed
-    */
-
-   sprintf(s, "%d.%d.%d.%d", (src >> 24) & 0xFF, (src >> 16) & 0xFF, (src >> 8) & 0xFF, src & 0xFF);
-   /*
-    #ifdef DEBUGNET
-    printf("kysipaddr=%s\r\n", s);
-    #endif
-    */
-   setenv("kysipaddr", s);
-   k__flash_write16((src & 0xFFFF), k_word_flash_map(PLIS_KYS_IP_OFFSET));
-   k__flash_write16((src >>16),     k_word_flash_map(PLIS_KYS_IP_OFFSET + 2));
-
-  NetState = NETLOOP_SUCCESS;
-
+   char s[15];
+   ip_to_string (src, s);
+   setenv(KYS_IP_ENV, s);
+   saveenv();
+   NetState = NETLOOP_SUCCESS;
 }
 
 //-----------------------------------------------------------------
@@ -756,7 +724,7 @@ static void KysTrapStart(void)
 #if defined(CONFIG_NET_MULTI)
    printf ("kys trap using %s device\n", eth_get_name());
 #endif   /* CONFIG_NET_MULTI */
-   NetSetTimeout (10000UL, KysTrapTimeout);
+   NetSetTimeout (5000UL, KysTrapTimeout);
  //  NetSetHandler (KysTrapHandler);
    return 1;
 }
