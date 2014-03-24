@@ -68,7 +68,8 @@ int spi_flash_cmd(struct spi_slave *spi, u8 cmd, void *response, size_t len)
 	return ret;
 }
 
-int spi_flash_cmd_read(struct spi_slave *spi, const u8 *cmd,size_t cmd_len, void *data, size_t data_len)
+int spi_flash_cmd_read(struct spi_slave *spi, const u8 *cmd,
+		size_t cmd_len, void *data, size_t data_len)
 {
 	unsigned long flags = SPI_XFER_BEGIN;
 	int ret;
@@ -169,7 +170,8 @@ int spi_flash_cmd_write(struct spi_slave *spi, const u8 *cmd, size_t cmd_len,con
 }
 
 
-int spi_flash_read_common(struct spi_flash *flash, const u8 *cmd,size_t cmd_len, void *data, size_t data_len)
+int spi_flash_read_common(struct spi_flash *flash, const u8 *cmd,
+		size_t cmd_len, void *data, size_t data_len)
 {
 	struct spi_slave *spi = flash->spi;
 	int ret;
