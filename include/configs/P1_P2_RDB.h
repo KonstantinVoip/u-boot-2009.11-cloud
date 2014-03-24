@@ -32,8 +32,8 @@
 
  
 
-                                   #define MPC_P2020       1
-     //                            #define RDB_P2020       1
+                               #define MPC_P2020       1
+    //                         #define RDB_P2020       1
 
 
 
