@@ -280,10 +280,16 @@ int eth_initialize(bd_t *bis)
 		eth_current_old = eth_current;
 		eth_current = eth_get_dev_by_name(ETH_KYS);
 		setenv(eth_act, eth_current->name);
-	   if (NetLoop(KYS_TRAP) < 0)
-	   {
-	      printf("kys trap failed\n");
-	   }
+		NetLoop(KYS_TRAP);
+      /*
+		if (NetLoop(KYS_TRAP) < 0)
+      {
+         printf("kys trap old\n");
+      }
+      */
+		IPaddr_t ip_kys = string_to_ip(getenv(KYS_IP_ENV));
+      k__flash_write16((ip_kys & 0xFFFF), k_word_flash_map(PLIS_KYS_IP_OFFSET));
+      k__flash_write16((ip_kys >>16),     k_word_flash_map(PLIS_KYS_IP_OFFSET + 2));
 #endif //CONFIG_KYS_TRAP
       //Zoya
 

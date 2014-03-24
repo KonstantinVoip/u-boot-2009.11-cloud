@@ -696,8 +696,9 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
 #define CONFIG_KYS_TRAP
 #ifdef CONFIG_KYS_TRAP
  //#define ETH_SCLUZ   eTSEC1 == nms
-   #define ETH_KYS     CONFIG_TSEC2_NAME
+   #define ETH_KYS             CONFIG_TSEC2_NAME
    #define PLIS_KYS_IP_OFFSET  0x0288
+   #define KYS_IP_ENV          "kysipaddr"
 #endif
 //Zoya
 
