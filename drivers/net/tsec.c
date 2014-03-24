@@ -29,6 +29,8 @@ DECLARE_GLOBAL_DATA_PTR;
 static uint rxIdx;		/* index of the current RX buffer */
 static uint txIdx;		/* index of the current TX buffer */
 
+#define RCTRL_PromiscEN           0x00000008
+
 
 typedef volatile struct rtxbd {
 	txbd8_t txbd[TX_BUF_CNT];
@@ -162,6 +164,13 @@ int tsec_initialize(bd_t * bis, struct tsec_info_struct *tsec_info)
 	udelay(2);  /* Soft Reset must be asserted for 3 TX clocks */
 	priv->regs->maccfg1 &= ~(MACCFG1_SOFT_RESET);
 
+	
+	//printf("!!!!!!!!!!!!!!! promisc_enable_168!!!!!!!!!!!!!!!!!\n");
+	priv->regs->rctrl=0x00000008;
+	
+	
+	
+	
 #if defined(CONFIG_MII) || defined(CONFIG_CMD_MII) \
 	&& !defined(BITBANGMII)
 	miiphy_register(dev->name, tsec_miiphy_read, tsec_miiphy_write);
@@ -211,6 +220,8 @@ int tsec_init(struct eth_device *dev, bd_t * bd)
 	rxIdx = 0;
 	txIdx = 0;
 
+	regs->rctrl=0x00000008; 
+	
 	/* Clear out (for the most part) the other registers */
 	init_registers(regs);
 
