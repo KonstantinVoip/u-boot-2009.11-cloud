@@ -174,6 +174,7 @@ static void PingStart(void);
 //Zoya
 #if defined(CONFIG_KYS_TRAP)
 static void KysTrapStart();
+//Zoya
 #endif
 //Zoya
 
