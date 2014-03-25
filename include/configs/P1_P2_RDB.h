@@ -30,8 +30,6 @@
 #ifndef __CONFIG_H
 #define __CONFIG_H
 
-
-
                                #define MPC_P2020       1
     //                         #define RDB_P2020       1
 
