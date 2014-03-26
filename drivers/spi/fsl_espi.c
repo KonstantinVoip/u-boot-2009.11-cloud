@@ -64,24 +64,26 @@ struct spi_slave *spi_setup_slave(unsigned int bus, unsigned int cs,unsigned int
 	unsigned char pm = 0;
 	int i;
 
+		
 	if (!spi_cs_is_valid(bus, cs))
 	{
+		printf("Error/!spi_cs_is_valid(bus, cs)\n\r");
 		return NULL;
 	}	
 		
 	slave = malloc(sizeof(struct spi_slave));
 	if (!slave)
 	{
+		printf("Error/slave = malloc(sizeof(struct spi_slave));\n\r");
 		return NULL;
     } 
 		
 	slave->bus = bus;
 	slave->cs = cs;
 	slave->max_transfer_length = ESPI_MAX_DATA_TRANSFER_LEN;
-
 	printf("------------------------------------------\n\r");
 	printf("SPI_INITIALIZATION:\n\r");
-	
+	printf("spi:bus_%0x |spi:cs_%0x |spi:max_hz_%0x |spi:mode_%0x \n", bus,cs, max_hz,mode);
 	//ip_to_string (NetServerIP, tmp);
 	//printf("+setenv_eth3addr+\n\r");
 	//setenv ("eth3addr", "012345678");

@@ -191,14 +191,18 @@ struct spi_flash *spi_flash_probe(unsigned int bus, unsigned int cs,unsigned int
 	u8 idcode[5];
 
 	spi = spi_setup_slave(bus, cs, max_hz, spi_mode);
-	if (!spi) {
-		debug("SF: Failed to set up slave\n");
+	if (!spi)
+	{
+		//debug("SF: Failed to set up slave\n");
+		  printf("SF: Failed to set up slave\n");
 		return NULL;
 	}
 
 	ret = spi_claim_bus(spi);
-	if (ret) {
-		debug("SF: Failed to claim SPI bus: %d\n", ret);
+	if (ret) 
+	{
+		//debug("SF: Failed to claim SPI bus: %d\n", ret);
+		 printf("SF: Failed to claim SPI bus: %d\n", ret);
 		goto err_claim_bus;
 	}
 

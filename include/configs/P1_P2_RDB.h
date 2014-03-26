@@ -30,8 +30,8 @@
 #ifndef __CONFIG_H
 #define __CONFIG_H
 
-                               #define MPC_P2020       1
-    //                         #define RDB_P2020       1
+                                   #define MPC_P2020       1
+    //                             #define RDB_P2020       1
 
 
 
@@ -95,11 +95,19 @@
 #define CONFIG_HARD_SPI
 #define CONFIG_FSL_ESPI
 #define CONFIG_CMD_SF
-//#define CONFIG_SF_DEFAULT_SPEED      10000000     /*10 Ìãö */
+
+
+/*
+    !WARNING!  8 Mhz unstable for spi clock do not use this
+	#define CONFIG_SF_DEFAULT_SPEED		8000000
+
+*/	
+#define CONFIG_SF_DEFAULT_SPEED        10000000     /*10 Ìãö */
 //#define CONFIG_SF_DEFAULT_SPEED      20000000     /*20 Ìãö */
-// #define CONFIG_SF_DEFAULT_SPEED    33000000      /*33 Ìãö */
-    #define CONFIG_SF_DEFAULT_SPEED    66666666     /*66 Ìãö */
- //#define CONFIG_SF_DEFAULT_SPEED     40000000     /*40 Ìãö */
+//#define CONFIG_SF_DEFAULT_SPEED      33000000      /*33 Ìãö */
+//#define CONFIG_SF_DEFAULT_SPEED      66666666     /*66 Ìãö */
+//#define CONFIG_SF_DEFAULT_SPEED      40000000     /*40 Ìãö */
+
 
 #define CONFIG_SF_DEFAULT_MODE 0
 
@@ -543,15 +551,21 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
 #define CONFIG_SYS_EEPROM_BUS_NUM	1
 
 /*Êîíôèãóðèðîâàíèå RTC */
-#define CONFIG_RTC_DS1337
-    #define CONFIG_SYS_I2C_RTC_ADDR                 0x68
-//  #define CONFIG_SYS_I2C_RTC_ADDR                 0x51 
-#define CONFIG_SYS_RTC_DS1337_NOOSC
+    
+#ifdef MPC_P2020
+	#define CONFIG_RTC_DS1388
+	#define CONFIG_SYS_I2C_RTC_ADDR                 0x68
+#endif	
+	
 
-/*Äëÿ íàøåé ïëàòû  íóæåí àäðåñ íà I2C îïèñàíèè ñòð 14->|01010001|=0x51*/
-/*#define CONFIG_RTC_PCF8563
-  #define CONFIG_SYS_I2C_RTC_ADDR                0x51
-*/
+#ifdef RDB_P2020	
+#define CONFIG_RTC_DS1337
+#define CONFIG_SYS_I2C_RTC_ADDR                     0x68
+#define CONFIG_SYS_RTC_DS1337_NOOSC
+#endif
+
+
+
 
 /*
  * General PCI
@@ -703,7 +717,11 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
 //////////////////////////////////////////Ethernet_Configuration_END////////////////////////////////////
 
 
-
+/*
+    !WARNING  8 Mhz unstable for spi clock do not use this!
+	#define CONFIG_ENV_SPI_MAX_HZ		8000000
+*/	
+	
 /*
  * Environment
  */
@@ -720,7 +738,7 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
 	#define CONFIG_ENV_IS_IN_SPI_FLASH	1
 	#define CONFIG_ENV_SPI_BUS		0
 	#define CONFIG_ENV_SPI_CS		0
-	#define CONFIG_ENV_SPI_MAX_HZ		8000000
+	#define CONFIG_ENV_SPI_MAX_HZ		10000000
 	#define CONFIG_ENV_SPI_MODE		0
 	#define CONFIG_ENV_SIZE			0x2000		/* 8KB */
 	#define CONFIG_ENV_OFFSET		0x100000	/* 1MB */
@@ -985,8 +1003,8 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
 #define CONFIG_HDBOOT			\
 	"sf probe 0;"		\
 	"sf read 1000000 150000 350000;"		\
-	"sf read 2000000 500000 600000;"		\
-	"sf read C00000  B00000 10000;"		\
+	"sf read 2000000 500000 800000;"		\
+	"sf read C00000  D00000 10000;"		\
 	"bootm   1000000 2000000 C00000;"	
 	
 #define CONFIG_RAMBOOTCOMMAND		\
