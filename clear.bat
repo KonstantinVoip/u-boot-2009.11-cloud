@@ -16,6 +16,8 @@ del C:\u-boot-2009.11-cloud\drivers\mtd\*.o
 del C:\u-boot-2009.11-cloud\drivers\mtd\libmtd.a
 del C:\u-boot-2009.11-cloud\drivers\mtd\nand\*.o
 del C:\u-boot-2009.11-cloud\drivers\mtd\nand\libnand.a
+del C:\u-boot-2009.11-cloud\drivers\spi\*.o 
+del C:\u-boot-2009.11-cloud\drivers\spi\libspi.a
 del C:\u-boot-2009.11-cloud\drivers\mtd\spi\*.o 
 del C:\u-boot-2009.11-cloud\drivers\mtd\spi\libspi_flash.a
 del C:\u-boot-2009.11-cloud\drivers\net\*.o 
