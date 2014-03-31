@@ -802,7 +802,7 @@ static void init_registers(volatile tsec_t * regs)
 	regs->hash.gaddr6 = 0;
 	regs->hash.gaddr7 = 0;
 
-	regs->rctrl = 0x00000000;
+	regs->rctrl = 0x00000008;
 
 	/* Init RMON mib registers */
 	memset((void *)&(regs->rmon), 0, sizeof(rmon_mib_t));
