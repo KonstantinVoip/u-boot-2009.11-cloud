@@ -1006,6 +1006,14 @@ extern unsigned long get_board_sys_clk(unsigned long dummy);
 	"sf read 2000000 500000 800000;"		\
 	"sf read C00000  D00000 10000;"		\
 	"bootm   1000000 2000000 C00000;"	
+#define CONFIG_IMIFO \
+   "sf probe 0;"     \
+   "sf read 1000000 150000 0xFF;"    \
+   "sf read 2000000 500000 0xFF;"    \
+   "iminfo 1000000;" \
+   "iminfo 2000000;"
+//   "iminfo 150000 500000"
+
 	
 #define CONFIG_RAMBOOTCOMMAND		\
 	"bdinfo"	\

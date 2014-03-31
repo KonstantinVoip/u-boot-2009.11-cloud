@@ -1083,6 +1083,8 @@ static int image_info (ulong addr)
 		}
 
 		image_print_contents (hdr);
+/*
+ Zoya
 
 		puts ("   Verifying Checksum ... ");
 		if (!image_check_dcrc (hdr)) {
@@ -1090,6 +1092,7 @@ static int image_info (ulong addr)
 			return 1;
 		}
 		puts ("OK\n");
+		*/
 		return 0;
 #if defined(CONFIG_FIT)
 	case IMAGE_FORMAT_FIT:

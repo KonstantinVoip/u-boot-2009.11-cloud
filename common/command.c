@@ -33,7 +33,36 @@ do_version (cmd_tbl_t *cmdtp, int flag, int argc, char *argv[])
 {
 	extern char version_string[];
 	printf ("\n%s\n", version_string);
+
+	char *s = getenv ("iminfo");
+	if(!s)
+	{
+	   s = CONFIG_IMIFO;
+	   setenv("iminfo", s);
+	   saveenv();
+	}
+	run_command (s, CONFIG_SYS_MAXARGS);
 	return 0;
+
+
+
+/*
+	char *bootcmd, *s, cmd[20];
+	bootcmd = getenv ("bootcmd");
+	s = strstr(bootcmd, "boot");
+	*s = 0;
+	if (run_command (bootcmd, 1) < 0)
+	{
+	   return 0;
+	}
+   while (s[0] != ' ')
+   {
+      s++;
+   }
+	sprintf(cmd, "iminfo %s", s);
+	run_command (cmd, 2);
+	return 0;
+	*/
 }
 
 U_BOOT_CMD(
